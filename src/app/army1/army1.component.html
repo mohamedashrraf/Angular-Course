@@ -1,0 +1,13 @@
+<input type="text" #ref (keyup)="print($event)" />
+<!-- ريفرنس بمسك بيه العنصر ولازم يكون فيه ايفنت بايندنج -->
+
+<input type="text" (keyup)="print($event)" />
+<!-- لما ادوس علي اي زرار ينفذ الفانكشن -->
+<input type="text" (keydown)="print($event); otherPrint()" />
+<!-- انفذ 2 فانكشن لما اكلك او ابلور -->
+
+<!-- 26 -->
+<app-child-army1>
+  <h2 class="demo1">projection 1</h2>
+  <h2 id="demo2">projection 2</h2>
+</app-child-army1>

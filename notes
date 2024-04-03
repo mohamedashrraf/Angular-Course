@@ -1,0 +1,358 @@
+ //PARENT TO CHILD @Input()
+  //عشان ابعت حاجة من الاب للابن زي البوستات اللي هيلف عليها ويعرضها في الكارد بعمل
+  //1 [postItem]="post"  في فايل الاب الاتشتيامال postItem الداتا اللي عايز ابعتها وتبقي بنفس الاسم في فايل التايب في الابن  - post القيمة اللي واخدها من ال ngfor من الاب
+  //2 @Input() postItem!: Post; في فايل الابن التايبسكريبت
+  //3 {{ postItem.خاصية }} في فايل الابن الاتشتيامال نحط اللي عايزين نعرضه بنفس الاسم اللي خدناه من الاب
+
+  //عشان اخلي الداتا اللي عايز ابعتها متبقاش بنفس الاسم في فايل التايب في الابن وتبقي باسم انا احدده اعمل Alias
+  //@Input("postAlias") postItem!: Post; كده عملت alias استخدم الاسم ده في الابن مكان postItem
+
+  @Input() postItem!: Post; // ! عشان محطش initial value postItem خدتها من الاب html
+
+  //CHILD TO PARENT
+  //عشان ابعت من الابن للاب لازم يحصل event
+  //1 (click)="sendToParent(postItem.id)" في فايل الابن الاتشتيامال نكتبها جوا الزرار او اللي المكان اللي عايز اشغل بيه الحدث
+  //2 sendToParent(id: number) {    }  في فايل التايبسكريبت في الابن اكتب بودي الفانكشن اللي عايز انفذها
+  //   @Output() sendPostId = new EventEmitter<number>(); نعرف بروبيرتي من نوع EventEmitter ده المسؤل عن انه يبعت الداتا من الابن للاب ولازم عشان يتم ده يحصل event و sendPostId بيتحط جوا () في الاتشتيامال بتاع الاب
+
+  //3 (sendPostId)="receivedFromChild($event)" في فايل اتشتيامال الاب بناخد الاوتبوت اللي عرفته في الابن وشايل قيمة اللي باعته للاب جوا () ولما يجي يشغل الفانكشن اللي فيها ايفنت
+  //4   receivedFromChild(id : any){ this.clickedPostId = id  } في فايل التايبسكريبت بتاع الاب ننفذ بودي الفانكشن تاخد ال id اللي جه من الابن وتحطه في المكان اللي انا عايزه زي العنوان وياخد انتروليشن عشان يتعرض
+
+  // الاقواس اللي علي الشمال زي [postItem] - (sendPostId) بتكون خاصة بالابن واللي علي اليمين خاص بالاب زي "post" - "receivedFromChild($event)"
+
+  @Output() sendPostId = new EventEmitter<number>();
+  sendToParent(id: number) {
+    console.log("CHILD",id);
+    this.sendPostId.emit(id)  //تنفذ الايفنت وتبعت ال value للاب
+  }
+
+
+  //@Output("postAliasId") sendPostId = new EventEmitter<number>(); كده عملت alias استخدم الاسم ده في الاب مكان postItem
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Angular Hooks component lifecycle
+- constructor()
+- ngOnchanges() تراقب تغييرات الانبوت تحصل في اي وقت في مراحل الكمبوننت نحط جواها ال @Input
+- *** ngOnInit() اول ما يبدا الكمبوننت انسب مكان لفيتش ال api
+- ngDoCheck() زي ال ngOnchanges مينفعش تتحط وهي موجودة change detection
+- ngAfterContentInit()   // contentChild is set after the content has been initialized نحط contentChild فيها مش هيبان في ال ngOnInit
+- ngAfterContentChecked()
+- *** ngAfterViewInit() لما الكمبوننت يشتغل بالكامل بهاندل فيها الحاجات الخاصة بالفيو زي تاجات الاتشتيامال او @viewChild
+                        لو جيت اعرض viewChild في ال ngOnInit هيرجع قيمة فاضية
+- ngAfterViewChecked() بعد ما حصله تغيير بعد ما اشتغل بالكامل
+- *** ngOnDestroy()
+*** اكتر 3 استخدام
+
+
+- ? علامة استمهام اسمها safe navigation operator بعرف بيها متغير ممكن يجيلي او لا يكون بقيمة او ب null
+- ! non-null assertion operator بتعرف متغير مستحيل قيمته تكون ب null
+
+- Template Variables بتتحط زي تعرف متغير اعرف بيه الانبوت لو حبيت اطبع قيمته مثلا #inputVar
+  ولما نطبع القيمة تكتب {{inputVar.value}}
+
+- Ternary operator زي ال if condition  num>1 ? true : false
+- ng g c comp --skip-tests نكريت كمبوننت من غير فايل spec
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+ //binding طريقة تخلي html و ts يكلموا بعض بدل استخدام ال dom
+  //binding 4 انواع
+  //one way from ts to html => 3 types 1 - interpolation { { } }
+  //2 - property binding[] <img [src]="userObj.profilePic" /> للصور عشان بتكون داينامك سورس الصورة او للزرار ال disabled
+          //property binding قيمة ديناميك بتتغير في التايبسكربت مش ثابتة []
+          // امثلة ليها زي الصور - الفاليو بتاعت الانبوت زي التكست بوكس - الزرار ال disabled
+  //3 - enent binding((click) = "function()" > - change ...) لما ادوس علي زرار او الماوس او اعمل حدث يعمل بايند من فايل الاتشتيامال للتايبسكربت
+
+  // two way binding  [(ngModel)]
+    // نعمل انواع binding دي عشان لو اتغيرت قيم الخصائص علي حسب اللي جاية من الداتابيز
+    //لازم اعملها import formModules
+    //عبارة عن event تشوف التغيرات او اللي اكتبه جديد في الانبوت + property binding يبايند القيمة الديناميك بتاعت الts
+
+  username: string = 'Mahmoud';
+  age: number = 26;
+  userObj = {
+    isAdmin: false,
+    name: 'Test',
+    age: 27,
+    profilePic:
+      'https://mir-s3-cdn-cf.behance.net/project_modules/disp/ea7a3c32163929.567197ac70bda.png',
+  };
+  alertUser(){
+    alert(this.username)
+  }
+  updateUserInput(e : any){
+    this.username = e.target.value
+  }
+
+  //interpolation binding {{}}
+<h4>Name : {{ username }}</h4>
+<h4>Name : {{ userObj.name }}</h4>
+<h4>Age : {{ userObj.age }}</h4>
+
+
+<!--porperty binding []-->
+<button class="btn btn-primary" [disabled]="!userObj.isAdmin"> اخلي الزرار ديسابول عند حاجة معينة او بعد كام ثانية او لو هو مش ادمن
+  delete user
+</button>
+constructor(){
+setTimeOut(){this.userObj.isAdmin=false,2000}
+}
+
+{{name}}===[innerText]="name" interpolation===property binding هي هي
+
+<!--event binding (click)-->
+<button class="btn btn-danger" (click)="alertUser()">add user</button>
+
+<!-- <input class="form-control" (change)="updateUserInput($event)" [value]="username" /> -->
+<!--change ناخد القيمة من التايب ونحدثها [value] ناخد القيمة من التايبس ونعرضها في ال html-->
+
+<!-- two way binding from ts to html and reverse used in form items only -->
+<input class="form-control my-3" [(ngModel)]="username" />
+<!--دمجت الخطوتين اختصارا للخطوتين اللي فوق-->
+<!--تاخد القيمة محمود في الانبوت محطوطة جاهزة واول ما اغير فيها جوا الانبوت تتغير في اليوزر-->
+<!-- [()] banana in the box => [value] + (change) -->
+
+[(ngModel)]="username" === in html: (input)=fun($event) in ts: fun(event){event.target.value} عشان اخلي ايفنت بايند زي ال ngModel
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+26)
+projection
+نمسك عنصرين او اكتر باي دي او كلاس او اي سليكتور في كمبوننت الاب ونحطهم في
+ngContent ونضيفلهم خصائص منه في كمبوننت الابن
+لكن ال css اللي واخدها الاب مش هتسمع في الابن الا لو عملنا encapsulation: viewEncapsulation.none كده ال css يبقي جلوبال
+encapsulation: viewEncapsulation.emulated ده ال default
+
+
+
+(4) الفرق بين ال model vs viewModel
+model ان اي حاجة جاية من الداتا بيز تتحط في كاتجوري معين ليهم id اي اي جدول في الداتا بيز ليه موديل بيعبر عن الداتا بتاعه
+viewModel شكل مختصر للموديل باخد منه الداتا اللي عايزها عشان استخدمها او اعملها bind  ليها اسم
+          زي ان يكون عندي موديل فيه 100 عنصر مش محتاج منه غير 5 بعملهم في فيو موديل
+
+- <ng-container> تاجة ملهاش وجود بحط فيها العنصر او الديف بتاعي عشان اديله خصائص او الوب عليه مبتظهرش الا في الرن تايم
+
+
+Directives  كلاسات بتديني خصائص اقدر استخدمها
+3 types
+  - component هي التاجة اللي بتعبر عن الكمبوننت في الاتشتيمال <app-directive-examples></app-directive-examples> السليكتور اللي في اول فايل التايبسكربت selector: 'app-directive-examples'  بتخليني استدعي الكمبوننت باسمه في التاجة
+  - structural([ngIf] - [ngFor] - [ngSwitch]) تغير في ال dom
+  - attribute directives([ngClass] - [ngStyle] - [ngModel]) تستخدم في الستايل اكتر تغير في العنصر زي انها تخفيه
+  كلاسات بضيفها تخليني اخفي او اظهر حاجة او اغير في الستايل
+  ngIf و ngClass ممكن يعملوا نفس الحاجة زي انهم يخفوا عنصر بس بينهم اختلاف تغيير ال dom
+
+(6)(97) *** Custom Directive***
+    بتخلي كود الاتشتيامال اللي بحط فيه اسم الدايركتف موجود جوا الدرايركتف اقدر امل خاصية تعدل عليه زي لوب او شرط
+- ng g directive dir1
+- in constructor directive بنحط فيه ريفرنس من العنصر بتاع الاتشتيامال elemRef
+- nativeElement = getElementById كاني مسكت العنصر واحطله الخصائص elemRef.nativeElement.style.border="2px solid red"
+- لما نعرف حاجة جوا ال constructor بنقدر نستخدمها في اي حتة جوا الكلاس بتاعه بس نحط قبلها this
+  constructor(private elem){
+    this.elem=*****
+  }
+  this.elem=****
+
+    //طريقتين امسك بيهم العنصر واحطله خواص renderer - @HostBinding
+  1- Rendrer طريقة افضل لبناء الدايركتف ببدل بيها الطريقة دي elemRef.nativeElement.style="2px solid red" بفانكشن this.renderer.setStyle(this.elemRef.nativeElement, 'background-color', 'blue');
+        نعرفه جوا الدايركتف في ال constructor من نوع Renderer2   constructor(private render:Renderer2) { }
+  2- @HostBinding('style.backgroundColor') backgroundColor!: string;
+
+  HostListener تشغل فانكشنز جوا الدايركتف بناء علي الايفنت اللي هعمله
+
+(103)Building structural Directive like ngIf
+
+
+
+
+(7) ***Custom Pipe***
+    ممكن اعملها تغيرلي في فورمات عرض العنصر بتاعي وينفع احط للعنصر كذه بايب ورا بعض
+- ng g pipe pipe1
+
+
+(12) ViewChild
+  تشير الداتا بين الكمبوننت زي Output بس الفرق بينها وبينه انها تخلي الاب يشوف كل اللي في الابن مش حاجة معينة في
+  وينفع اخلي فايل التايبسكربت يشوف اللي في الاتشتيامال عن طريق ان احط لعنصر الاتشتيامال ريفرنس اندهه بيه في التايبسكربت #
+  1- لو التايبسكربت بيشوف الاتشتيامال
+  @viewChild("inputRef") elemInput!: ElementRef;لازم يتعرف من نوع ElementRef
+  <input #inputRef type="text" />
+
+  ngAfterContentInit(){
+    elemInput.nativeElement.style.border="2px solid red"; غير في خصائص العنصر
+  }
+
+  2- لو الاب بيشوف الابن
+    @viewChild("childComponent") elemComp!: childComponent; بحط اسم الابن من نوع الابن برضو عشان اللي بشوفه هو اوبجكت من اللي فيه
+                                                      elem متغير من الكمبوننت كله
+    @viewChild(childComponent) elemComp!  لو عايز اشوف الكمبوننت ومحتطلوش ريفرنس نحط اسمه علطول من غير سترينج ""
+    ngAfterContentInit(){
+    console.log(this.elemComp.prodName) نعرض اسامي المنتجات اللي في الابن
+  }
+
+الفرق بين Output و viewChild
+Output كل ما يحصل تغير في الابن بيروح يقولي ويبعت للاب
+viewChild مفيهاش كده يعني مثلا لو فيه اسعار دولار مش هعرف اشوف تحديثاتها بالفيو لازم اوتبوت يا اما احدث انا كل شوية
+          لكن لو انا عايز اتحكم في اي تغيير في الابن بستخدم الفيو
+
+(86) contentChild
+      access Elements/Components projected using <ng-content> العناصر او التاجات اللي جواها
+
+(14) Routing
+- create appRoutingModule
+  ng g module app-routing --flat --module-app
+  --flat يعني حط الفايل من برا جنب appModule  //   --module-app يعني خليه يلود مع ال appModule اول ما يفتح
+
+(16)(173) Observable
+      نتعامل جواه مع 3 فانكشنز next - error - complete
+      let addObservable=new Observable ((obs=>{
+        obs.next(); يروح يجيب الداتا زي then في البروميس
+        obs.error();
+        obs.complete(); بعت كل الداتا مش هيبعت حاجة تاني
+      }))
+      احطه في سيرفس واعمل عليها سابسكرايب في الكمبوننت واعرف اوبجكت من نوع Observable واعمل عليه سابسكرايب
+      
+      unSubscribe بدل ما اعملها لكل كمبوننت بسابسكرايب عليها اعمل لكل سبسكرايب push في ارراي واعملهم كلهم unSubscribe مرة ةاحدة
+                  وبستخدمها في اني اوقف ال interval او الستريم اللي شغال لما اعمل راوت مثلا علي كمبوننت تاني 
+                  عشان ننفذها نعرف متغير من نوع subscribtion ونعمله السابسكريب وال unSubscribe
+                    private activatedSub: Subscription;
+                    ngOnInit() {
+                      this.activatedSub = this.userService.activatedEmitter.subscribe(didActivate => {
+                        this.userActivated = didActivate;});}
+                    ngOnDestroy(): void {this.activatedSub.unsubscribe();}
+                    Observable.complete() مش محتاج اعمل unsubscribe لو عملت complete
+
+
+(17) Hot Observable بيعمل emit من غير ما يستني يسابسكرايب
+    Cold Observable مينفذش اي حاجة لا لما يعمل سبسكرايب
+
+Rxjs يديني فانكشنز و اوبريتور جاهزة ترجعلي Observable استخدمه علطول
+    - from يرجع عناصر الارراي في شكل Observable ورا بعض
+        getElm(): Observable <string>{
+            return from(this.arrayElm)
+        }
+    - of يلوب علي عناصر ويعرضها   return of("num1","num2","num3")
+    - retry لو فيه ايرور تعيد ان اجيب الداتا تاني عد مرات انا احددها لو لسه في مشكلة اعمل catch retry(3), catchError()
+    - pipe تنفذ فانكشنز زي فلتر او ماب علي ال Observable قبل ما يتعمله subscribe
+
+- observer عمل سابسكرايب علي Observable او اكتر
+- Observable يرجع داتا ويعملها emit لحد ما يتعملها subscribe
+- Behavior Subject يسمع في الهيدر مثلا لو ضفت حاجة في الكارت او عملت لوج ان
+
+- install RxJS v6 by running:  npm install --save rxjs@6
+  In addition, also install the rxjs-compat package:  npm install --save rxjs-compat
+
+- params, snapshots and interval بيستخدموا ال Observable واعمل عليهم subscribe
+
+-operators on Observable عشان نغير في شكل الداتا اللي راجعالي نعمل عليها operator زي map, filter تتحط جوا فانكشن pipe 
+                        مش محتاج اعمل subscribe طالما عامل pipe لانها بتعمل السابسكريب
+
+
+(19)(150) Guard  مترضاش تدحلني مثلا علي الهوم غير لما اعمل لوج ان لما ادوس علي الهوم تعمل دايركت للوج ان
+  types:  1- CanActivate يتنفذ او ما يفتح روت معين لو دخلت ع الهوم ومش عامل لوج ان تسمح بالدخول او لا
+          2- CanActivateChild
+          3- CanDeactivate عكس ال CanActivate لما اسيب صفحة فورم مثلا وفيها داتا مش محفوظة ممكن تروح تسمح بالخروج او لا
+          4- CanLoad
+  ng g g AuthGuard
+  نروح للراوت بتاع الكمبوننت اللي عايزين نحط شروط علي الدخول فيه ونكتب { Path: 'Comp1', component:comp1, canActivate[AuthGuard]}
+  مش هيدخل الكمبوننت غير لما يحقق الجارد
+
+   canActivateChild(route: ActivatedRouteSnapshot, //تخليني امنع الدخول علي ال children routes مش الراوت اللي محتويهم servers وبنده الجارد في الراوت الكبير
+                   state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+    return this.canActivate(route, state);
+  }
+  // {path: 'servers',canActivateChild: [AuthGuard],component: ServersComponent,
+  //   children: [
+  //   { path: ':id', component: ServerComponent, resolve: {server: ServerResolver} },
+  //   { path: ':id/edit', component: EditServerComponent, canDeactivate: [CanDeactivateGuard] }] },
+
+
+(20) JSON Server باكدج من npm تخليني اعمل Custom Api
+
+Environment
+export const environment = {
+    baseURL: 'https://api.noroff.dev/api/v1'
+}; عشان لو بيقرا من كذه api نغير مكان القراية من هنا منعدلش فيهم كلهم
+ممكن لينك ال api يتغير او بيحصل تكرار كتير لنفس اللينك فنحطه في environment
+
+(21)
+addGame(newPrd : Game) {
+    return this.httpClient.post<Game>(`${environment.baseURL}/gamehub/`,JSON.stringify(newPrd),this.httpOption) //نضيف منتج جديد للداتابيز
+  }// لازم نبعت الهيدر من نوع json واحنا بنضيف داتا زي ما بنعمل في بوست مان عشان كده بعرف الهيدر في httpOption واستدعيها
+
+
+
+
+Model
+ فايل بعرف فيه متغيرات هستخدمها كذه مرة في الكمبوننتس واعملها الكونستراكتور بتاعها
+ عشان استخدمه في الكمبوننت import { Model1 } from "../model1.model"
+ models:Model1[]=new Model1[{"name","age","****"}]
+
+(79)
+<app-child><p>mmmmmmmmmm</p></app-child> لو كتبنا اي حاجة جوا تاجة في الكمبوننت البن وانا بندهه جوا الاب مش هتظهر الا لما اكتب ng-content جوا كمبوننت الابن نفسه في المكان اللي عايزها تظهر فيه
+app-child{
+  <ng-content></ng-content>
+}
+
+(94) <button (click)="onlyOdd = !onlyOdd"></button> الزرار لما ادوس عليه يعمل حاجة ولما ادوس تاني يعمل عكسها
+      const onlyOdd=false;
+
+
+(118) services
+      عشان نعمل انجكت لسرفيس جوا سيرفس تانية بنحط السيرفس اللي هتبقي جوا في الكونستراكتور بتاع السيرفس اللي عايزين نستخجمها فيها ونعمل @Injectable() جوا السيرفس الكبيرة
+      و providers: [اسم السيرفس اللي هتتحط جوا], في appModule
+
+
+(132) Routing
+      routerLink="register" == http://localhost:4200/register باص من غير ال / اسمه relatrive path
+      routerLink="/register" == http://localhost:4200/register يعمل ريلود عشان ال / معناها انه بادي من ال root
+      routerLink="register" == http://localhost:4200/register/register لو انا في صفحة الريجستر وعملت فيها راوت يدخل علي نفس الصفحة تاني او يعملها ريلود هيعمل ايررور لازم احط ال / ء
+      routerLink="../register" == http://localhost:4200/ يرجع بالباث لورا
+      routerLink="../register/something" == http://localhost:4200/ يطلع من الباص كله ويرجع للرئيسي root
+      routerLink="../../register/something" == http://localhost:4200/register يطلع للي قبله
+      this.router.navigate(['register' or '/register']) == http://localhost:4200/register navigate مبتعرفش انا واقف في انهي راوتر فبتبدئ تضيف الباث من ال root
+      this.router.navigate(['register'], {relativeTo: this.route}) يعرف انا موجود في انهي راوت وساعتها تختلف register عن /register نعملها امبورت ل activatedRoute
+
+    طريقتين اروح بيهم علي الباص
+    1- this.router.navigate
+    2- اني اكتب في الاتشتيمال جوا تاجة الزرار [routerLink]="['/user',1,"mohamed"]" الباث هيبقي == http://localhost:4200/user/1/mohamed
+        user:{id:number, name:string}
+
+    لو الداتا اللي جاية اي دي او اسم اتغيرت وعملت عليها navigate بعدها جت داتا جديدة تظهر في اللينك بس متتحدثش لو طبعتها في تيكست
+    لازم اخلي الداتا ترجع Observable عشان يشوف اي تغيرات ويحدثها
+     this.user = { هنا جبتهم من اللينك
+      id: this.route.snapshot.params['id'],
+      name: this.route.snapshot.params['name']
+    };
+          <a [routerLink]="['/users', 10, 'Anna']">Load Anna (10)</a> هنا غيرت في الداتا
+     this.paramsSubscription = this.route.params هنا اخلي التغييرات اللي غيرتها في الداتا تسمع
+      .subscribe(
+        (params: Params) => {
+          this.user.id = params['id'];
+          this.user.name = params['name'];
+        }
+      )
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+Standalone component / pipe / Directive كمبوننت لا ينتمي لاي موديول مبيعتمدش علي ngModule اقدر استخدمه في اي كمبوننت ستاند زيه فقط عن طريق اني احط في خانة imports
+                                          @Component({
+                                                    standalone=true,
+                                                    imports[StandComp],
+                                                    selector: 'app-child-army1',
+                                                    templateUrl: './child-army1.component.html',
+                                                    styleUrls: ['./child-army1.component.scss']
+                                                  })
+                      ده بيحل مشكلة كتابة الكود والامبورت الكتير اللي بتضطر اعمله للكمبوننتس في الابموديول في حالة لو كل الكمبوننتس standalone لو كمبوننت ستاند يعتمد علي كمبوننتس تانية ستاند
+                      لو كل الكمبوننتس ستاند اون ده بيخل الكمبوننت اللي عايز استخدم فيه كمبوننت تاني اعمله امبورت فيه نفسه واسيب الابموديول فاضي
+                      @Component({ طريقة كتابته
+                                  standalone: true, طالما بترو يبقي نشيل الامبورت من ال appModule
+                                  selector: 'app-cmp',
+                                  template: '<app-some-other-component />',
+                                  imports: [SomeOtherComponent]
+                                })
+                                export class SomeComponent {}
+                      ممكن ندمج ال standalone في ال ngModule ونعمله امبورت عادي في appModule او كمبوننت يكون standalone زيه
+                      بس نحطه في imports مش ال declaration
+                      services عشان نستخدمها في standalone component نحط اسمها جوا @Component({providers:[apiServ]})
+
+
+angular material لما نعمل import ونشغل كومبوننت standalone لازم في الموديول بتاعه نحط اسم الكمبوننت في imports مش ال declarations
