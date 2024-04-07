@@ -12,6 +12,7 @@ import { BetterDirectiveDirective } from './Directives/better-directive.directiv
 import { NgIfDirective } from './Directives/ng-if.directive';
 import { MaxComponent } from './max/max.component';
 import { FormsModule } from '@angular/forms';
+import { FilterPipe } from './Pipes/filter.pipe';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { FormsModule } from '@angular/forms';
     CurrencyPipe,
     BetterDirectiveDirective,
     NgIfDirective,
-    MaxComponent
+    MaxComponent,
+    FilterPipe
   ],
   imports: [
     BrowserModule,

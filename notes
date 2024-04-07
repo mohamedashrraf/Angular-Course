@@ -163,10 +163,12 @@ Directives  كلاسات بتديني خصائص اقدر استخدمها
 
 
 
-(7) ***Custom Pipe***
+(7)(249) Custom Pipe
     ممكن اعملها تغيرلي في فورمات عرض العنصر بتاعي وينفع احط للعنصر كذه بايب ورا بعض
-- ng g pipe pipe1
+    - ng g pipe pipe1
     ممكن اديلها في الفانكشن براميتير واباصي قيمته في الاتشتيامال name | CustomPipe:5 or "xx"
+      transform(val: number, rate: number): number {} يتحط براميتير في فانكشن ال transform
+  (251) create filter pipe
 
 
 (12) ViewChild
@@ -334,13 +336,6 @@ app-child{
         }
       )
     -  { path: '', redirectTo: '/recipes', pathMatch: 'full' }, مينفعش اعمل دايركت والباث فاضي "" لانه كده هيبقي عايز يدايركت علي كل الباثث عشان هو جزء منهم كلهم هيعمل ايرور لازم احط pathMatch: 'full' عشان اقوله ان ده الباث كله
-
-
-(186) Forms
-        1- template driven  2- Rective forms
-
-
-
 
     { path: 'new', component: RecipeEditComponent}, //و حطينا الراوت بتاعها تحت راوت الاي دي يعمل ايرور لانه هيفتكر كلمة new هي اي دي
     { path: ':id', component: RecipeDetailComponent }, //لازم الاي دي الداينامك يبقي اخر راوت عشان ميفتكرش الراوت اللي بعده اي دي زيه

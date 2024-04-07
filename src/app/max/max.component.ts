@@ -7,49 +7,46 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./max.component.scss']
 })
 export class MaxComponent {
-  @ViewChild('f', { static: false }) signupForm!: NgForm;
-  defaultQuestion = 'teacher';
-  answer = '';
-  genders = ['male', 'female'];
-  user = {
-    username: '',
-    email: '',
-    secretQuestion: '',
-    answer: '',
-    gender: ''
-  };
-  submitted = false;
-
-  suggestUserName() {
-    const suggestedName = 'Superuser';
-    // this.signupForm.setValue({
-    //   userData: {
-    //     username: suggestedName,
-    //     email: ''
-    //   },
-    //   secret: 'pet',
-    //   questionAnswer: '',
-    //   gender: 'male'
-    // });
-    this.signupForm.form.patchValue({
-      userData: {
-        username: suggestedName
-      }
-    });
+  //252
+appStatus = new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve('stable');
+    }, 2000);
+  });
+  servers = [
+    {
+      instanceType: 'medium',
+      name: 'Production',
+      status: 'stable',
+      started: new Date(15, 1, 2017)
+    },
+    {
+      instanceType: 'large',
+      name: 'User Database',
+      status: 'stable',
+      started: new Date(15, 1, 2017)
+    },
+    {
+      instanceType: 'small',
+      name: 'Development Server',
+      status: 'offline',
+      started: new Date(15, 1, 2017)
+    }
+  ];
+  filteredStatus = '';
+  getStatusClasses(server: {instanceType: string, name: string, status: string, started: Date}) {
+    return {
+      'list-group-item-success': server.status === 'stable',
+      'list-group-item-warning': server.status === 'offline',
+      'list-group-item-danger': server.status === 'critical'
+    };
   }
-
-  // onSubmit(form: NgForm) {
-  //   console.log(form);
-  // }
-
-  onSubmit() {
-    this.submitted = true;
-    this.user.username = this.signupForm.value.userData.username;
-    this.user.email = this.signupForm.value.userData.email;
-    this.user.secretQuestion = this.signupForm.value.secret;
-    this.user.answer = this.signupForm.value.questionAnswer;
-    this.user.gender = this.signupForm.value.gender;
-
-    this.signupForm.reset();
+  onAddServer() {
+    this.servers.push({
+      instanceType: 'small',
+      name: 'New Server',
+      status: 'stable',
+      started: new Date(15, 1, 2017)
+    });
   }
 }
