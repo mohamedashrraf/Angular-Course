@@ -10,6 +10,8 @@ import { Angular13Component } from './angular13/angular13.component';
 import { CurrencyPipe } from './Pipes/currency.pipe';
 import { BetterDirectiveDirective } from './Directives/better-directive.directive';
 import { NgIfDirective } from './Directives/ng-if.directive';
+import { MaxComponent } from './max/max.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -20,11 +22,13 @@ import { NgIfDirective } from './Directives/ng-if.directive';
     Angular13Component,
     CurrencyPipe,
     BetterDirectiveDirective,
-    NgIfDirective
+    NgIfDirective,
+    MaxComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
