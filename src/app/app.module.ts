@@ -13,6 +13,8 @@ import { NgIfDirective } from './Directives/ng-if.directive';
 import { MaxComponent } from './max/max.component';
 import { FormsModule } from '@angular/forms';
 import { FilterPipe } from './Pipes/filter.pipe';
+import { MaxHttpComponent } from './max-http/max-http.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -25,12 +27,14 @@ import { FilterPipe } from './Pipes/filter.pipe';
     BetterDirectiveDirective,
     NgIfDirective,
     MaxComponent,
-    FilterPipe
+    FilterPipe,
+    MaxHttpComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
