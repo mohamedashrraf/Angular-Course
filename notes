@@ -355,6 +355,36 @@ app-child{
 
       2- Reactive Forms بنحتاج نعمل فيها امبورت ل ReactiveformModule
 
+
+
+(276) Interceptor
+      intercept(req: HttpRequest<any>, next: HttpHandler) {
+          const modifiedRequest = req.clone({ //لو عايز اغير في الريكويست او احطله اضافات
+            headers: req.headers.append('Auth', 'xyz')
+          });
+          return next.handle(modifiedRequest); //تخلي الريكويست يكمل كل ما اجيب داتا من api
+        }
+      }
+      //clone اعدل في الريكويست   //handle اعدل في الريسبونس
+
+      intercept(req: HttpRequest<any>, next: HttpHandler) {
+      return next.handle(req).pipe( //handle تخليني اتعامل مع الريسبونس اغير فيه او احطله اضافات
+        tap(event => {
+          if (event.type === HttpEventType.Response) {
+            console.log('Incoming response');
+            console.log(event.body);
+          }
+        })
+      );
+      }
+
+      providers: [
+    {
+      provide: HTTP_INTERCEPTORS, //بحدد عايز استخدم الانترسبتور في الاب كله
+      useClass: LoggingInterceptorService,
+      multi: true //استخدم اكتر من انترسبتور
+    },
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 (348) Standalone component / pipe / Directive كمبوننت لا ينتمي لاي موديول مبيعتمدش علي ngModule اقدر استخدمه في اي كمبوننت ستاند زيه فقط عن طريق اني احط في خانة imports
                                           @Component({
