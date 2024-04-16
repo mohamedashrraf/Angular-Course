@@ -356,6 +356,20 @@ app-child{
       2- Reactive Forms بنحتاج نعمل فيها امبورت ل ReactiveformModule
 
 
+(274)http
+    let searchParams = new HttpParams() ممكن نحط اكتر من params في اللينك بتاعي
+    searchParams = searchParams.append('print', 'pretty');
+    searchParams = searchParams.append('custom', 'key');
+    return this.http
+      .get<{ [key: string]: Post }>(
+        'https://ng-complete-guide-c56d3.firebaseio.com/posts.json',
+        {
+          headers: new HttpHeaders({ 'Custom-Header': 'Hello' }),
+          params: searchParams,
+          responseType: 'json'
+        }
+      )
+
 
 (276) Interceptor
       intercept(req: HttpRequest<any>, next: HttpHandler) {
@@ -384,6 +398,15 @@ app-child{
       useClass: LoggingInterceptorService,
       multi: true //استخدم اكتر من انترسبتور
     },
+
+
+(295)firebase
+        "rules": { بحدد مين يقدر ياكسس الداتابيز لازم يكون عامل لوج ان لو خليت اي خد يقدر ياكسس هخلي القيمة ب true
+    ".read": "auth != null"
+    ".write": "auth != null"
+  }
+
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 (348) Standalone component / pipe / Directive كمبوننت لا ينتمي لاي موديول مبيعتمدش علي ngModule اقدر استخدمه في اي كمبوننت ستاند زيه فقط عن طريق اني احط في خانة imports
