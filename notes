@@ -419,6 +419,18 @@ app-child{
 (317) Component Factory Resolver استدعيها في الكونستراكتور تخليني اكريت نسخة من كمبوننت موجود عندي Deprecated بيستخدموا مكانها viewContainerRef
 
 
+
+(329) Modules
+      exports: [ //بعمل للكمبوننت بتاعت اكسبورت لما اعوز استخدمهم برا الموديول
+    HeaderComponent,
+    NotFoundComponent
+  ]
+  - ممكن نعمل Module routing كمان ياخد راوت الكمبوننت بتاعت الموديل اللي هيا فيه نكتب فيه
+        @NgModule({
+          imports: [RouterModule.forChild(routes)],
+          exports: [RouterModule]
+        })
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 (348) Standalone component / pipe / Directive كمبوننت لا ينتمي لاي موديول مبيعتمدش علي ngModule اقدر استخدمه في اي كمبوننت ستاند زيه فقط عن طريق اني احط في خانة imports
                         @Component({
