@@ -430,6 +430,44 @@ app-child{
           imports: [RouterModule.forChild(routes)],
           exports: [RouterModule]
         })
+        مش بحتاج اعمل export للكمبوننتس في الموديول طالما حاتطهم في routing module بتاعه بعمل اكسبورت لل routing module
+        ممكن بدل ما نعمل لل routing module فايل في الموديل نحط كوده في الموديول نفسه جوا imports
+                imports: [
+                  CommonModule,
+                  FormsModule,
+                  RouterModule.forChild([{ path: '', component: AuthComponent }]),
+                  SharedModule
+                ]
+
+        لو عملت declare لكمبوننت معينة في موديول مقدرش اعملها declare في حتة تانية انما اقدر اعملها امبورت اكتر من مرة
+
+          Core Module موديول بحط فيه الحاجات اللي في provided زي services Interceptor بحطه جنب appModule
+
+
+(336) Lazy Loading
+        { الكمبوننت اللي عايز اخليه lazy احط الراوت بتاعه كده في فايل الراوتس الرئيسي
+    path: "recipes", loadChildren: () => import("./recipes/recipes.module").then(m => m.RecipesModule)},
+
+
+    Preloading اخلي الويبسايت يحمل صفحات علي قد ما يقدر عشان لو النت ضعف الصفحات تشتغل
+    @NgModule({
+      imports: [RouterModule.forRoot(appRoutes){preloadingStrategy:PreloadAllModules}],
+      exports: [RouterModule]
+    })
+
+(344) Environment
+      export const environment = {
+          baseURL: 'https://api.noroff.dev/api/v1'
+      };
+      //environment تعدل اللينكات الستاتيك نعرف الجزء المتكرر في متغير
+      //عشان لو بيقرا من كذه api نغير مكان القراية من هنا منعدلش فيهم كلهم
+
+
+(346) Firebase install at my project to deployment
+      npm install -g firebase-tools
+      firebase login
+      firebase init
+      firebase deploy
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 (348) Standalone component / pipe / Directive كمبوننت لا ينتمي لاي موديول مبيعتمدش علي ngModule اقدر استخدمه في اي كمبوننت ستاند زيه فقط عن طريق اني احط في خانة imports
