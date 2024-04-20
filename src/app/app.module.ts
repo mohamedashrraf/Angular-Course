@@ -15,6 +15,7 @@ import { FormsModule } from '@angular/forms';
 import { FilterPipe } from './Pipes/filter.pipe';
 import { MaxHttpComponent } from './max-http/max-http.component';
 import { HttpClientModule } from '@angular/common/http';
+import { SignalsComponent } from './signals/signals.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { HttpClientModule } from '@angular/common/http';
     NgIfDirective,
     MaxComponent,
     FilterPipe,
-    MaxHttpComponent
+    MaxHttpComponent,
+    SignalsComponent
   ],
   imports: [
     BrowserModule,

@@ -471,25 +471,37 @@ app-child{
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 (348) Standalone component / pipe / Directive كمبوننت لا ينتمي لاي موديول مبيعتمدش علي ngModule اقدر استخدمه في اي كمبوننت ستاند زيه فقط عن طريق اني احط في خانة imports
-                        @Component({
-                                  standalone=true,
-                                  imports[StandComp],
-                                  selector: 'app-child-army1',
-                                  templateUrl: './child-army1.component.html',
-                                  styleUrls: ['./child-army1.component.scss']
-                                })
-                      ده بيحل مشكلة كتابة الكود والامبورت الكتير اللي بتضطر اعمله للكمبوننتس في الابموديول في حالة لو كل الكمبوننتس standalone لو كمبوننت ستاند يعتمد علي كمبوننتس تانية ستاند
-                      لو كل الكمبوننتس ستاند اون ده بيخل الكمبوننت اللي عايز استخدم فيه كمبوننت تاني اعمله امبورت فيه نفسه واسيب الابموديول فاضي
-                      @Component({ طريقة كتابته
-                                  standalone: true, طالما بترو يبقي نشيل الامبورت من ال appModule
-                                  selector: 'app-cmp',
-                                  template: '<app-some-other-component />',
-                                  imports: [SomeOtherComponent]
-                                })
-                                export class SomeComponent {}
-                      ممكن ندمج ال standalone في ال ngModule ونعمله امبورت عادي في appModule او كمبوننت يكون standalone زيه
-                      بس نحطه في imports مش ال declaration
-                      services عشان نستخدمها في standalone component نحط اسمها جوا @Component({providers:[apiServ]})
+                @Component({
+                          standalone=true,
+                          imports[StandComp],
+                          selector: 'app-child-army1',
+                          templateUrl: './child-army1.component.html',
+                          styleUrls: ['./child-army1.component.scss']
+                        })
+              ده بيحل مشكلة كتابة الكود والامبورت الكتير اللي بتضطر اعمله للكمبوننتس في الابموديول في حالة لو كل الكمبوننتس standalone لو كمبوننت ستاند يعتمد علي كمبوننتس تانية ستاند
+              لو كل الكمبوننتس ستاند الون ده بيخل الكمبوننت اللي عايز استخدم فيه كمبوننت تاني اعمله امبورت فيه نفسه واسيب الابموديول فاضي
+              @Component({ طريقة كتابته
+                          standalone: true, طالما بترو نشيل الامبورت من ال appModule
+                          selector: 'app-cmp',
+                          template: '<app-some-other-component />',
+                          imports: [SomeOtherComponent]
+                        })
+                        export class SomeComponent {}
+              ممكن ندمج ال standalone في ال ngModule ونعمله امبورت عادي في appModule او كمبوننت يكون standalone زيه
+              بس نحطه في imports مش ال declaration
+              services عشان نستخدمها في standalone component نحط اسمها جوا @Component({providers:[apiServ]}) ياما اسيبها زي ماهيا @Injectable({providedIn: 'root' }) تتشاف في اي حتة
+              - routing في انجولر 17 م معندناش فايل appModule عشان نشغل routing بتاع فايل الراوتس بنروع فايل main.ts نحط فيه
+                      providers:[ importProvidersForm(AppRoutingModule)]
+
+
+(360) Angular Signals
+        طريقة تسهل كتابة الكود زي React Hooks بالظبط بتخليني استغني عن حاجات كنت بستخدمها من rxjs
+        -Example كاونتر ادوس زرار يزود وينقص بحد قيمة ابتدائية ليه counter=signal(0) ينفع احط فيمة للسيجنال برقم او سترنج او اي نوع داتا
+                  واجي اعمل بايند علي الكاونتر {{counter()}} لازم نحط قوسين فانكشن
+        - نستخدم معاها فانكشن update, mutate بتاخد كول باك فانكشن البراميتر القيمة القديمة ويرجع القيمة الجديدة
+                                set ناخد القيمة الجديدة علطول
+                                computed تاخد فانكشن جواها كفاليو براميتر فاضي وترجع القمة بناءا علي السيجنال computed(()=> this.c*2) القيمة اللي بترجع تعتمد علي قيمة اللي جاية من السيجنال بتعملها عملية حسابية مثلا
+                                effect نستخدمها في الكونستراكتور او ngOnInit بترن الكود اللي جاي من السيجنال بتاخد كول باك فانكشن
 
 
 angular material لما نعمل import ونشغل كومبوننت standalone لازم في الموديول بتاعه نحط اسم الكمبوننت في imports مش ال declarations
