@@ -463,11 +463,14 @@ app-child{
       //عشان لو بيقرا من كذه api نغير مكان القراية من هنا منعدلش فيهم كلهم
 
 
-(346) Firebase install at my project to deployment
-      npm install -g firebase-tools
-      firebase login
-      firebase init
-      firebase deploy
+(346) Firebase
+      install at my project to deployment عشان نرن البروجيكت علي سيرفر Firebase
+        npm install -g firebase-tools
+        ng build
+        firebase login
+        firebase init hosting
+                  What do you want to use as your public directory? dist/app/browser لما يسئل السؤال ده احط اللينك
+        firebase deploy
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 (348) Standalone component / pipe / Directive كمبوننت لا ينتمي لاي موديول مبيعتمدش علي ngModule اقدر استخدمه في اي كمبوننت ستاند زيه فقط عن طريق اني احط في خانة imports
@@ -492,6 +495,7 @@ app-child{
               services عشان نستخدمها في standalone component نحط اسمها جوا @Component({providers:[apiServ]}) ياما اسيبها زي ماهيا @Injectable({providedIn: 'root' }) تتشاف في اي حتة
               - routing في انجولر 17 م معندناش فايل appModule عشان نشغل routing بتاع فايل الراوتس بنروع فايل main.ts نحط فيه
                       providers:[ importProvidersForm(AppRoutingModule)]
+              - Angular Material لما نعمل import ونشغل كومبوننت standalone لازم في الموديول بتاعه نحط اسم الكمبوننت في imports مش ال declarations
 
 
 (360) Angular Signals
@@ -503,5 +507,54 @@ app-child{
                                 computed تاخد فانكشن جواها كفاليو براميتر فاضي وترجع القمة بناءا علي السيجنال computed(()=> this.c*2) القيمة اللي بترجع تعتمد علي قيمة اللي جاية من السيجنال بتعملها عملية حسابية مثلا
                                 effect نستخدمها في الكونستراكتور او ngOnInit بترن الكود اللي جاي من السيجنال بتاخد كول باك فانكشن
 
+(370) NgRx
 
-angular material لما نعمل import ونشغل كومبوننت standalone لازم في الموديول بتاعه نحط اسم الكمبوننت في imports مش ال declarations
+(435) Angular Universal
+          زي ال next في رياكت تخلي السيرفر يشوف الكود الكود يجي من السيرفر كامل SSR حل مشكلة ان الاب لازم يحمل كود الجافاسكريبت كله عشان يشتغل بتتحنل الصفحة مع تكملة تحميل الجافاسكريبت
+          - Ng add @nguniversal/express-engine عشان نشغلها
+            تتضاف فايلات جديدة وبتتحدث فايلات زي الراوت
+          - بنتعامل مع api في فايل server.ts ده عبارة عن فايل nodejs
+          - npm run dev:ssr يعمل build deploy للاب اللي اتعمله Universal
+                if working on an Angular 17 project (check the package.json file to find out), the correct command to run would be ng add @angular/ssr.
+                Creating Angular SSR Apps with Angular 17+
+          - If create a new Angular project that comes with Universal / SSR enabled run .ng new <project-name> --ssr
+            Running a SSR / Universal Project with Angular 17+
+            All you have to do with Angular 17, is run ng serve. It automatically use SSR if you enabled it via ng add @angular/ssr or ng new <project-name> --ssr.
+
+
+(445) Angular Animation
+          You probably need to install the new animations package (running the command never hurts): npm install --save @angular/animations
+            Add the BrowserAnimationsModule  to imports[]  in AppModule
+            import { BrowserAnimationsModule } from '@angular/platform-browser/animations'  (in the AppModule!)
+            You then import trigger , state , style  etc from @angular/animations  instead of @angular/core
+          - trigger فانكشن بتعمل الانيميشن تاخد العنصر اللي هعمل الانيميشن عليه تاخد جواها فانكشن state()
+          - stste() الحالة اللي بينتقل منها والحالة اللي بينتقل ليها الانيميشن normal/highlighted اي اسم بحدده انا يعبر عن مراحل هعملها للانيميشن
+                  @Component({
+                    selector: 'app-root',
+                    templateUrl: './app.component.html',
+                    animations: [
+                      trigger('divState', [
+                        state('normal', style({'background-color': 'red',transform: 'translateX(0)'})),
+                        state('highlighted', style({'background-color': 'blue',transform: 'translateX(100px)'})),
+                        transition('normal <=> highlighted', animate(300))]), <=> السهم ده بيختصر الخطوة من ستيت للتاني في سطر والرجوع للستيت الاولي في سطر تاني معناها رايح جاي
+                        # transition('highlighted => normal', animate(800))
+
+
+
+           transition('shrunken <=> *', [
+              style({
+                'background-color': 'orange' //اللون المبدئي
+              }),
+              animate(1000, style({
+                borderRadius: '50px' //لما ادوس شرنك يبقي دايرة في ثانية
+              })),
+              animate(500) //يرجع لشكله الاصلي بعد نص ثانية
+            ])
+
+
+
+
+
+
+
+
