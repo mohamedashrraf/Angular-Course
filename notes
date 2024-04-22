@@ -509,6 +509,7 @@ app-child{
 
 (370) NgRx
 
+
 (435) Angular Universal
           زي ال next في رياكت تخلي السيرفر يشوف الكود الكود يجي من السيرفر كامل SSR حل مشكلة ان الاب لازم يحمل كود الجافاسكريبت كله عشان يشتغل بتتحنل الصفحة مع تكملة تحميل الجافاسكريبت
           - Ng add @nguniversal/express-engine عشان نشغلها
@@ -533,28 +534,59 @@ app-child{
                     selector: 'app-root',
                     templateUrl: './app.component.html',
                     animations: [
-                      trigger('divState', [
+                      trigger('divState', [ العنصر اللي هعمل عليه الانيميشن نعمله بايند في الاتشتيامال [divState]
                         state('normal', style({'background-color': 'red',transform: 'translateX(0)'})),
                         state('highlighted', style({'background-color': 'blue',transform: 'translateX(100px)'})),
                         transition('normal <=> highlighted', animate(300))]), <=> السهم ده بيختصر الخطوة من ستيت للتاني في سطر والرجوع للستيت الاولي في سطر تاني معناها رايح جاي
                         # transition('highlighted => normal', animate(800))
+          -transition('shrunken <=> *', [
+              style({'background-color': 'orange' //اللون المبدئي}),
+              animate(1000, style({borderRadius: '50px' //لما ادوس شرنك يبقي دايرة في ثانية})),
+              animate(500) //يرجع لشكله الاصلي بعد نص ثانية])
+
+          -Void الستيت اللي بتعبر ان العنصر مش موجود في ال DOM و اتشال
+                تتحط في state عملها لما بضيف او بحذف عنصر في ال DOM
+                * تعبر عن اي state تانية
+                 trigger('list1', [
+                    state('in', style({opacity: 1,
+                      transform: 'translateX(0)'})),
+                    transition('void => *', [ من مفيش لاي ستيت
+                      style({opacity: 0,
+                        transform: 'translateX(-100px)'}),
+                      animate(300)
+                    ]),
+                    transition('* => void', [ من اي ستيت لمفيش
+                      animate(300, style({
+                        transform: 'translateX(100px)',
+                        opacity: 0}))])
+                        ]),
+
+          - group فانكشن تجمع كذه انيميشن مع بعض مع اوقات duration
+                مختلفة جواها كذه فانكشن animate يتنفذوا في نفس الوقت بدل ما ينفذ فانكشن بعدها التانية
+
+          - (@divState.start)="animationStarted($event)" (@divState.done)="animationEnded($event)" و عايز انفذ حاجة قبل الانيميشن او بعده
 
 
+(456) Service Workers / PWA تخلي الويب سايت يشتغل اوفلاين
+              عن طريق انها تعمل كاش لل storage والداتا والنت شغال عشان لما يفصل نشغل من الكاش
+              ng add @angular/pwa تخلي انجولار تنزل ال service workers علي البروجكت بتاعي
+              ng build نكتب الامر ده بعد كده
+              npm i -g http-server يعمل هوست لسيرفر عندي
+              http-server -p 8081 نرن السرفر علي البورت ده او اي رقم بورت
 
-           transition('shrunken <=> *', [
-              style({
-                'background-color': 'orange' //اللون المبدئي
-              }),
-              animate(1000, style({
-                borderRadius: '50px' //لما ادوس شرنك يبقي دايرة في ثانية
-              })),
-              animate(500) //يرجع لشكله الاصلي بعد نص ثانية
-            ])
-
-
-
-
-
-
+              - "dataGroups": [ داتا جت من api عايز اعملها كاش عشان تفضل موجودة لما يروح النت
+                        {
+                          "name": "posts",
+                          "urls": [
+                            "https://jsonplaceholder.typicode.com/posts" اللينك اللي بنعمل منه فيتش
+                          ],
+                          "cacheConfig": {
+                            "maxSize": 5, عددالريسبونسس
+                            "maxAge": "6h", تقعد قد ايه قبل ما اتخلص منها
+                            "timeout": "10s", الوقت اللي استناه قبل ما احط في الكاش
+                            "strategy": "freshness" or "performance" لو freshness يعني يوصل للباك دايما الاول ويستخدم الكاس لما يكون اونلاين بس
+                          } performance يعمل فيتش لاي حاجة في اسرع وقت ممكن وياخد اكبر maxAge في اعتباره
+                        }
+                      ]
 
 
