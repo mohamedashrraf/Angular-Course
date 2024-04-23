@@ -508,6 +508,8 @@ app-child{
                                 effect نستخدمها في الكونستراكتور او ngOnInit بترن الكود اللي جاي من السيجنال بتاخد كول باك فانكشن
 
 (370) NgRx
+          state management باكدج بنزلها بتعمل عمل السيرفس تدير وتستخدم في الكمبوننتس هي مش بتزود حاجة عن السيرفس بين ممكن نستخدمها في المشاريع الكبيرة
+
 
 
 (435) Angular Universal
@@ -588,5 +590,23 @@ app-child{
                           } performance يعمل فيتش لاي حاجة في اسرع وقت ممكن وياخد اكبر maxAge في اعتباره
                         }
                       ]
+
+
+(473) CLI
+          --dry-run يوريني الكوماند هيعمل ايه من غير ما ينفذه
+          --routing تعمل راوت موديول
+          --skip-tests متعملش فايل spec
+          ng lint لو فيه ايرور يقولي فين
+
+          - ng g @angular/Material:nav main يعمل كمبوننت فيه navbar
+          - ng update @angular/core @angular/cli يعمل ابديت للباكدج ولفيرجن انجولر
+          - ng g application projectName اعمل بروجكت جديد في نفس البروجكت 2 في واحد
+          - ng g library myLibrary بعمل library استخدمها زي angular Material مثلا عبارة عن كمبوننت
+
+
+(487) Angular Elements
+            تشغيل كمبوننت انجولار علي بروجكت html css js native
+            - npm i --save @angular/elements
+            import {createCustomElement} from '@angular/elements' نكريت الكود النيتف في الكمبوننت بياخد createCustomElement من نوع Injector
 
 
