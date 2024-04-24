@@ -509,7 +509,19 @@ app-child{
 
 (370) NgRx
           state management باكدج بنزلها بتعمل عمل السيرفس تدير وتستخدم في الكمبوننتس هي مش بتزود حاجة عن السيرفس بين ممكن نستخدمها في المشاريع الكبيرة
+          - store بخزن فيه الداتا زي فايل السيرفس
+          - component اللي بتاكسسه يتحدث لما تتغير الداتا في الستور يلسن عليها
+          - selector يقرا الداتا من الستور ويباصيها للكمبوننت هو اللي بيعمل ليسن علي التغيرات ويبعتها للكمبوننت
+          - action بتعمل dispatch تخلي الكمبوننت يغير في ال store لو دوست علي زرار معين او سجلت فورم مثلا بياخد identifier سترنج لازم يكون يونيك كل اكشن ليه identifier مختلف
+          - reducer بحط فيها التغيرات اللي جت من ال action تتحط في store بيرجع stste في الفايل بتاعه
+          - effects اوامر بتحصل مع ال action محتاجة تتنفذ زي انا اجيب ريكويست من الباك
+          ng add @ngrx/store ننزل الباكدج
 
+          this.count$ = store.select(selectCount); //تحدد فانكشن من ال store وانا في الكمبوننت
+          count$ نحط $ في اخر لو بترجع Observable مش شرط تتحط ممكن محطهاش
+          - on فانكشن يستخدمها ال reducer عشان يعمل listen علي action
+                  on(increment, (state, action) => state + action.value), //هي اللي بتعمل ليسن علي فانكشن جوا الاكشن
+          - async pipe: async pipe subscribes to an Observable or Promise and returns the latest value it has emitted. When a new value is emitted, the async pipe marks the component to be checked for changes.When the component gets destroyed, the async pipe unsubscribes automatically to avoid potential memory leaks.
 
 
 (435) Angular Universal
