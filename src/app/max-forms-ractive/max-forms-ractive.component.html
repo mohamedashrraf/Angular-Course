@@ -1,0 +1,110 @@
+<h2>2- Reactive forms</h2>
+<hr />
+<form [formGroup]="gameForm" (ngSubmit)="handleSubmitForm()">
+  <div class="mb-3">
+    <label for="nameInput" class="form-label">Game name</label>
+    <input
+      type="text"
+      class="form-control"
+      id="nameInput"
+      aria-describedby="nameHelp"
+      formControlName="name"
+    /><!--formControlName نربط بيها كل انبوت بالريفرنس بتاعه في فايل ال ts زي ال name في ال template driven-->
+    لازم نديها نفس الاسم اللي معرفه في فايل ts
+    <div
+      id="nameHelp"
+      class="form-text text-danger"
+      *ngIf="
+        gameForm.['name'].touched && gameForm.controls['name'].invalid
+      "
+    >
+      عشان نوصل للكنترول بدل ما نحط ال name بنحط gameForm.controls['name']
+      <!-- طريقة تانية -->
+      *ngIf="!signupForm.get('userData.name').valid &&
+      signupForm.get('userData.name').touched"
+
+      <span *ngIf="gameForm.controls['name'].errors?.['required']"
+        >This field is required</span
+      >
+      <span *ngIf="gameForm.controls['name'].errors?.['minlength']"
+        >Min.length is 3 characters</span
+      >
+    </div>
+  </div>
+  <div class="mb-3">
+    <label for="descriptionInput" class="form-label">Game description</label>
+    <textarea
+      type="text"
+      class="form-control"
+      id="descriptionInput"
+      aria-describedby="descriptionHelp"
+      formControlName="description"
+    ></textarea>
+    <div
+      id="nameHelp"
+      class="form-text text-danger"
+      *ngIf="
+        gameForm.controls['description'].touched &&
+        gameForm.controls['description'].invalid
+      "
+    >
+      <span *ngIf="gameForm.controls['description'].errors?.['required']"
+        >This field is required</span
+      >
+      <span *ngIf="gameForm.controls['description'].errors?.['minlength']"
+        >Min.length is 10 characters</span
+      >
+      <span *ngIf="gameForm.controls['description'].errors?.['maxlength']"
+        >Max.length is 200 characters</span
+      >
+    </div>
+  </div>
+  <div class="mb-3">
+    <label for="priceInput" class="form-label">Game price</label>
+    <input
+      type="number"
+      class="form-control"
+      id="priceInput"
+      aria-describedby="priceHelp"
+      formControlName="price"
+    />
+    <div
+      id="nameHelp"
+      class="form-text text-danger"
+      *ngIf="
+        gameForm.controls['price'].touched && gameForm.controls['price'].invalid
+      "
+    >
+      <span *ngIf="gameForm.controls['price'].errors?.['required']"
+        >This field is required</span
+      >
+    </div>
+  </div>
+  <button type="submit" class="btn btn-primary" [disabled]="gameForm.invalid">
+    Submit
+  </button>
+
+  <!--form Array-->
+  <div formArrayName="hobbies">
+    <h4>Your Hobbies</h4>
+    <button class="btn btn-default" type="button" (click)="onAddHobby()">
+      Add Hobby
+    </button>
+    <div
+      class="form-group"
+      *ngFor="let hobbyControl of hobbyControls; let i = index"
+    >
+      <input type="text" class="form-control" [formControlName]="i" />
+    </div>
+  </div>
+
+  <!-- 215 Custom Validators -->
+  <span *ngIf="signupForm.get('userData.username').errors['nameIsForbidden']"
+    >This name is invalid!</span
+  >
+</form>
+
+<!-- Import ReactiveFormsModule -->
+<!--الخطوات-->
+<!-- TS => FormGroup => init. new FormGroup => new FormControl -->
+<!-- HTML => [formGroup]="formName" ngSubmit => on each field input => formControlName -->

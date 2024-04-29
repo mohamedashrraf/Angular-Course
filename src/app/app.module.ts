@@ -17,6 +17,8 @@ import { MaxHttpComponent } from './max-http/max-http.component';
 import { HttpClientModule } from '@angular/common/http';
 import { SignalsComponent } from './signals/signals.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { MaxFormsTempComponent } from './max-forms-temp/max-forms-temp.component';
+import { MaxFormsRactiveComponent } from './max-forms-ractive/max-forms-ractive.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,9 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     MaxComponent,
     FilterPipe,
     MaxHttpComponent,
-    SignalsComponent
+    SignalsComponent,
+    MaxFormsTempComponent,
+    MaxFormsRactiveComponent
   ],
   imports: [
     BrowserModule,

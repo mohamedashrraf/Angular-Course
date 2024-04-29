@@ -1,0 +1,138 @@
+<h2>1- Template driven forms</h2>
+<!-- 1- Template Driven Forms -->
+<hr />
+<form #gameForm="ngForm" (ngSubmit)="handleFormSubmit(gameForm)">
+  لو حطينا gameForm.value هعرض قيم الكنترولس اللي في الفورم
+  <!-- نساويها بريفرانس ngForm تجمع الداتا وتديها للفورم-->
+  عشان اربط ال controls بالفورم 1- لازم احطلهم name بمسك بيه الكنترول ولو طبعته
+  مثلا يظهر بالاسم ده في التايبسكريبت 2- لازم احطلهم ngModel عشان تربط الكنترول
+  بالفورم اللي هو جواها بتعمل 2 way binding بين الفروم والانبوت
+  <div class="mb-3">
+    <label for="nameInput" class="form-label">Game name</label>
+    <input type="text" class="form-control" id="nameInput"
+    aria-describedby="nameHelp" name="name" ngModel #name="ngModel" required
+    minlength="3" pattern="" == regular expession pattern /> #name="ngModel"
+    ريفرنس ع الانبوت يخليني امسكه واشوف التفاصيل والايرور جواه
+    <!--ngModel نعرفها للانبوت عشان تعمل binding بينها وبين الفورم تبعتلها الداتا وترد اذا كانت صح ولا غلط-->
+    <label for="exampleInputEmail1" class="form-label">Email address</label>
+    <input
+      type="email"
+      class="form-control"
+      id="exampleInputEmail1"
+      aria-describedby="emailHelp"
+      ngModel
+      name="email"
+      #email="ngModel"
+      required
+      minlength="3"
+      email
+    />email معناها بخليه يكتب فورمات الايميل
+    <div
+      id="nameHelp"
+      class="form-text text-danger"
+      *ngIf="name.touched && name.invalid"
+    >
+      <!--touched لما افقد الفوكس ادوس علي العنصر واسيبه ويكون الانبوت فيه ايرور لونه باحمر واظهر الايرورات الي هنفذها تحت-->
+      لو محطيناش touched الايرورات بتاعت الفاليديشن كلها هتكون ظاهرة اول ما افتح
+      الصفحة
+      <span *ngIf="name.errors?.['required']">This field is required</span> بخصص
+      كل ايرور يظهر امتي
+      <span *ngIf="name.errors?.['minlength']">Min.length is 3 characters</span>
+    </div>
+  </div>
+  <div class="mb-3">
+    <label for="descriptionInput" class="form-label">Game description</label>
+    <textarea
+      type="text"
+      class="form-control"
+      id="descriptionInput"
+      aria-describedby="descriptionHelp"
+      name="description"
+      ngModel
+      #description="ngModel"
+      required
+      minlength="10"
+      maxlength="200"
+    ></textarea>
+    <div
+      id="nameHelp"
+      class="form-text text-danger"
+      *ngIf="description.touched && description.invalid"
+    >
+      <span *ngIf="description.errors?.['required']"
+        >This field is required</span
+      >
+      <span *ngIf="description.errors?.['minlength']"
+        >Min Length is 10 characters</span
+      >
+      <span *ngIf="description.errors?.['maxlength']"
+        >Max Length is 200 characters</span
+      >
+      لما بيوصل للماكس بيمنع الكتابة وميظهرش الايرور بتاعه
+      <!--مش هيظهر ان فيه ايرور لانه لما يوصل عند 200 حرف هيمنعني من الكتابة-->
+    </div>
+  </div>
+  <div class="mb-3">
+    <label for="priceInput" class="form-label">Game price</label>
+    <input
+      type="number"
+      class="form-control"
+      id="priceInput"
+      aria-describedby="priceHelp"
+      name="price"
+      #price="ngModel"
+      ngModel
+      required
+    />
+
+    <div
+      id="nameHelp"
+      class="form-text text-danger"
+      *ngIf="price.touched && price.invalid"
+    >
+      <span *ngIf="price.errors?.['required']">This field is required</span>
+    </div>
+  </div>
+  <button
+    type="submit"
+    class="btn btn-primary"
+    [disabled]="gameForm.invalid or !gameForm.valid"
+  >
+    لو الفورم فاليد وكاتب الانبوت صح شغل الزرار Submit
+  </button>
+
+  <select
+    id="secret"
+    class="form-control"
+    [ngModel]="defaultQuestion"
+    name="secret"
+  >
+    <option value="pet">Your first Pet?</option>
+    <option value="teacher">Your first teacher?</option>
+  </select>
+
+  <div class="radio" *ngFor="let gender of genders">
+    <label>
+      <input type="radio" name="gender" ngModel [value]="gender" required />
+      {{ gender }}
+    </label>
+  </div>
+
+  <!--203-->
+  <div class="row" *ngIf="submitted">
+    <div class="col-xs-12">
+      <h3>Your Data</h3>
+      <p>Username: {{ user.username }}</p>
+      <p>Mail: {{ user.email }}</p>
+      <p>Secret Question: Your first {{ user.secretQuestion }}</p>
+      <p>Answer: {{ user.answer }}</p>
+      <p>Gender: {{ user.gender }}</p>
+    </div>
+  </div>
+</form>
+
+<!-- خطوات ال template driven -->
+<!--1 Import FormsModule -->
+<!--2 HTML => form #formName="ngForm" اي دي يمسك الفورم (ngSubmit)="handleFormSubmit(formName.value) تديني القيم اللي حطيتها في كل الانبوتس" -->
+<!--3 HTML => Input name="controlName" الkey بتاع الفاليو ngModel تربط كل انبوت بالفورم #controlname="ngModel #ريفرنس خاص بكل انبوت"-->
+<!--4 HTML => Errors controlname.invalid && controlname.touched => controlname.errors?.[]-->

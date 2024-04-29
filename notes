@@ -119,19 +119,19 @@ porperty binding
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 26) projection
-    نمسك عنصرين او اكتر باي دي او كلاس او اي سليكتور في كمبوننت الاب ونحطهم في
-    ngContent ونضيفلهم خصائص منه في كمبوننت الابن
-    لكن ال css اللي واخدها الاب مش هتسمع في الابن الا لو عملنا encapsulation: viewEncapsulation.none كده ال css يبقي جلوبال
-    encapsulation: viewEncapsulation.emulated ده ال default
+        نمسك عنصرين او اكتر باي دي او كلاس او اي سليكتور في كمبوننت الاب ونحطهم في
+        ngContent ونضيفلهم خصائص منه في كمبوننت الابن
+        لكن ال css اللي واخدها الاب مش هتسمع في الابن الا لو عملنا encapsulation: viewEncapsulation.none كده ال css يبقي جلوبال
+        encapsulation: viewEncapsulation.emulated ده ال default
 
 
 
 (4) الفرق بين ال model vs viewModel
-model ان اي حاجة جاية من الداتا بيز تتحط في كاتجوري معين ليهم id اي اي جدول في الداتا بيز ليه موديل بيعبر عن الداتا بتاعه
-viewModel شكل مختصر للموديل باخد منه الداتا اللي عايزها عشان استخدمها او اعملها bind  ليها اسم
-          زي ان يكون عندي موديل فيه 100 عنصر مش محتاج منه غير 5 بعملهم في فيو موديل
+        model ان اي حاجة جاية من الداتا بيز تتحط في كاتجوري معين ليهم id اي اي جدول في الداتا بيز ليه موديل بيعبر عن الداتا بتاعه
+        viewModel شكل مختصر للموديل باخد منه الداتا اللي عايزها عشان استخدمها او اعملها bind  ليها اسم
+                  زي ان يكون عندي موديل فيه 100 عنصر مش محتاج منه غير 5 بعملهم في فيو موديل
 
-- <ng-container> تاجة ملهاش وجود بحط فيها العنصر او الديف بتاعي عشان اديله خصائص او الوب عليه مبتظهرش الا في الرن تايم
+        - <ng-container> تاجة ملهاش وجود بحط فيها العنصر او الديف بتاعي عشان اديله خصائص او الوب عليه مبتظهرش الا في الرن تايم
 
 
 Directives  كلاسات بتديني خصائص اقدر استخدمها
@@ -142,28 +142,77 @@ Directives  كلاسات بتديني خصائص اقدر استخدمها
       كلاسات بضيفها تخليني اخفي او اظهر حاجة او اغير في الستايل
       ngIf و ngClass ممكن يعملوا نفس الحاجة زي انهم يخفوا عنصر بس بينهم اختلاف تغيير ال dom
 
-(6)(97) *** Custom Directive***
-    بتخلي كود الاتشتيامال اللي بحط فيه اسم الدايركتف موجود جوا الدرايركتف اقدر امل خاصية تعدل عليه زي لوب او شرط
-- ng g directive dir1
-- in constructor directive بنحط فيه ريفرنس من العنصر بتاع الاتشتيامال elemRef
-- nativeElement = getElementById كاني مسكت العنصر واحطله الخصائص elemRef.nativeElement.style.border="2px solid red"
-- لما نعرف حاجة جوا ال constructor بنقدر نستخدمها في اي حتة جوا الكلاس بتاعه بس نحط قبلها this
-  constructor(private elem){
-    this.elem=*****
-  }
-  this.elem=****
+(6)(97) Custom Directive
+          بتخلي كود الاتشتيامال اللي بحط فيه اسم الدايركتف موجود جوا الدرايركتف اقدر امل خاصية تعدل عليه زي لوب او شرط
+          - ng g directive dir1
+          - in constructor directive بنحط فيه ريفرنس من العنصر بتاع الاتشتيامال elemRef
+          - nativeElement = getElementById كاني مسكت العنصر واحطله الخصائص elemRef.nativeElement.style.border="2px solid red"
+          - لما نعرف حاجة جوا ال constructor بنقدر نستخدمها في اي حتة جوا الكلاس بتاعه بس نحط قبلها this
+            constructor(private elem){
+              this.elem=*****
+            }
+            this.elem=****
 
-    //طريقتين امسك بيهم العنصر واحطله خواص renderer - @HostBinding
-  1- Rendrer طريقة افضل لبناء الدايركتف ببدل بيها الطريقة دي elemRef.nativeElement.style="2px solid red" بفانكشن this.renderer.setStyle(this.elemRef.nativeElement, 'background-color', 'blue');
-        نعرفه جوا الدايركتف في ال constructor من نوع Renderer2   constructor(private render:Renderer2) { }
-  2- @HostBinding('style.backgroundColor') backgroundColor!: string;
+              //طريقتين امسك بيهم العنصر واحطله خواص renderer - @HostBinding
+            1- Rendrer طريقة افضل لبناء الدايركتف ببدل بيها الطريقة دي elemRef.nativeElement.style="2px solid red" بفانكشن this.renderer.setStyle(this.elemRef.nativeElement, 'background-color', 'blue');
+                  نعرفه جوا الدايركتف في ال constructor من نوع Renderer2   constructor(private render:Renderer2) { }
+            2- @HostBinding('style.backgroundColor') backgroundColor!: string;
 
-  HostListener تشغل فانكشنز جوا الدايركتف بناء علي الايفنت اللي هعمله
+            HostListener تشغل فانكشنز جوا الدايركتف بناء علي الايفنت اللي هعمله
 
 (103)Building structural Directive like ngIf
 
 
+(111)Alternative Injection Syntax
+    Injecting services (or, in general: dependencies) into components via the constructor functions is the most common way of perform such injections. You'll see this approach in most Angular projects you'll be working on.
 
+    However, there also is an alternative way of injecting dependencies: Via Angular inject() function.
+
+    Instead of injecting LoggingService like this:
+
+    @Component(...)
+    export class AccountComponent {
+      // @Input() & @Output() code as shown in the previous lecture
+
+      constructor(private loggingService: LoggingService) {}
+    }
+    you could inject it like this, by using the inject() function:
+
+    import { Component, Input, Output, inject } from '@angular/core'; // <- Add inject import
+
+    @Component(...)
+    export class AccountComponent {
+      // @Input() & @Output() code as shown in the previous lecture
+      private loggingService?: LoggingService; // <- must be added
+
+      constructor() {
+        this.loggingService = inject(LoggingService);
+      }
+    }
+    It's totally up to you, which approach you prefer. In this course (and, as mentioned, in most projects), we'll use the constructor approach.
+
+    A Different Way Of Injecting Services
+        If you are using Angular 6+ (check your package.json  to find out), you can provide application-wide services in a different way.
+
+        Instead of adding a service class to the providers[]  array in AppModule , you can set the following config in @Injectable() :
+
+        @Injectable({providedIn: 'root'})
+        export class MyService { ... }
+        This is exactly the same as:
+
+        export class MyService { ... }
+        and
+
+        import { MyService } from './path/to/my.service';
+
+        @NgModule({
+            ...
+            providers: [MyService]
+        })
+        export class AppModule { ... }
+        Using this syntax is completely optional, the traditional syntax (using providers[] ) will also work.
+
+        The "new syntax" does offer one advantage though: Services can be loaded lazily by Angular (behind the scenes) and redundant code can be removed automatically. This can lead to a better performance and loading speed - though this really only kicks in for bigger services and apps in general.
 
 (7)(249) Custom Pipe
     ممكن اعملها تغيرلي في فورمات عرض العنصر بتاعي وينفع احط للعنصر كذه بايب ورا بعض
@@ -354,23 +403,29 @@ app-child{
               input.ng-invalid{color:red}
 
 
-
       2- Reactive Forms بنحتاج نعمل فيها امبورت ل ReactiveformModule
 
+      - FormArray Angular 8+, there a new way of clearing all items in a FormArray.
+          (<FormArray>this.recipeForm.get('ingredients')).clear();
+          The clear() method automatically loops through all registered FormControls (or FormGroups) in the FormArray and removes them.
+          Its like manually creating a loop and calling removeAt() for every item.
 
-(274)http
-    let searchParams = new HttpParams() ممكن نحط اكتر من params في اللينك بتاعي
-    searchParams = searchParams.append('print', 'pretty');
-    searchParams = searchParams.append('custom', 'key');
-    return this.http
-      .get<{ [key: string]: Post }>(
-        'https://ng-complete-guide-c56d3.firebaseio.com/posts.json',
-        {
-          headers: new HttpHeaders({ 'Custom-Header': 'Hello' }),
-          params: searchParams,
-          responseType: 'json'
-        }
-      )
+
+
+(274) httpClient
+      let searchParams = new HttpParams() ممكن نحط اكتر من params في اللينك بتاعي
+      searchParams = searchParams.append('print', 'pretty');
+      searchParams = searchParams.append('custom', 'key');
+      return this.http
+        .get<{ [key: string]: Post }>(
+          'https://ng-complete-guide-c56d3.firebaseio.com/posts.json',
+          {
+            headers: new HttpHeaders({ 'Custom-Header': 'Hello' }),
+            params: searchParams,
+            responseType: 'json'
+          }
+        )
+        - put تعدل في القديم تحتفظ بيه وتضيف ريكورد جديد
 
 
 (276) Interceptor
@@ -449,13 +504,12 @@ app-child{
 (336) Lazy Loading
         { الكمبوننت اللي عايز اخليه lazy احط الراوت بتاعه كده في فايل الراوتس الرئيسي
     path: "recipes", loadChildren: () => import("./recipes/recipes.module").then(m => m.RecipesModule)},
-
-
     Preloading اخلي الويبسايت يحمل صفحات علي قد ما يقدر عشان لو النت ضعف الصفحات تشتغل
     @NgModule({
       imports: [RouterModule.forRoot(appRoutes){preloadingStrategy:PreloadAllModules}],
       exports: [RouterModule]
     })
+
 
 (344) Environment
       export const environment = {
@@ -509,15 +563,24 @@ app-child{
                                 computed تاخد فانكشن جواها كفاليو براميتر فاضي وترجع القمة بناءا علي السيجنال computed(()=> this.c*2) القيمة اللي بترجع تعتمد علي قيمة اللي جاية من السيجنال بتعملها عملية حسابية مثلا
                                 effect نستخدمها في الكونستراكتور او ngOnInit بترن الكود اللي جاي من السيجنال بتاخد كول باك فانكشن
 
+
 (370) NgRx
           state management باكدج بنزلها بتعمل عمل السيرفس تدير وتستخدم في الكمبوننتس هي مش بتزود حاجة عن السيرفس بين ممكن نستخدمها في المشاريع الكبيرة
+          - ng add @ngrx/store ننزل الباكدج
           - store بخزن فيه الداتا زي فايل السيرفس عبارة عن فولدر جواه كل selector, reducer, effect, action
           - component اللي بتاكسسه يتحدث لما تتغير الداتا في الستور يلسن عليها
           - selector يقرا الداتا من الستور ويباصيها للكمبوننت هو اللي بيعمل ليسن علي التغيرات ويبعتها للكمبوننت
+                      نستخدمه بدل ما نعرف ال key علطول عشان بيبقي موجود سرفيسس و كومبوننتس كتير تاكسس نفس الداتا من الستور بيكون ال selector مكان سنتر رئيسي اجيبها منه
           - action بتعمل dispatch تخلي الكمبوننت يغير في ال store لو دوست علي زرار معين او سجلت فورم مثلا بياخد identifier سترنج لازم يكون يونيك كل اكشن ليه identifier مختلف
           - reducer بحط فيها التغيرات اللي جت من ال action تتحط في store بيرجع stste في الفايل بتاعه
-          - effects اوامر بتحصل مع ال action محتاجة تتنفذ زي انا اجيب ريكويست من الباك
-          - ng add @ngrx/store ننزل الباكدج
+          - effects اوامر بتحصل مع ال action محتاجة تتنفذ زي انا اجيب ريكويست من الباك httpRequest - localstorage - logging to console
+                    ng add @ngrx/effects ننزل باكدج ال effects
+
+
+          - providers: [ لازم نكتب كل store و effects في فايل main.ts
+              provideStore({ counter: counterReducer }),
+              provideEffects([CounterEffects]),
+            ],
 
           - StoreModule.forRoot({ بحط فيها اي reducer اعمله جوا appModule
                 counter: counterReducer,
@@ -525,7 +588,9 @@ app-child{
               }),
           - EffectsModule.forRoot([CounterEffects]), بحط فيها اي effect اعمله جوا appModule
 
-          this.count$ = store.select(selectCount); //تحدد فانكشن من ال store وانا في الكمبوننت
+          - this.count$ = store.select(selectCount) تحدد فانكشن من ال store وانا في الكمبوننت
+                                select فانكشن تاكسس قيم جوا ال selector بدل ما احط key علطول حطهم في selector
+
           count$ نحط $ في اخر لو بترجع Observable مش شرط تتحط ممكن محطهاش
           - on فانكشن يستخدمها ال reducer عشان يعمل listen علي action
                   on(increment, (state, action) => state + action.value), //هي اللي بتعمل ليسن علي فانكشن جوا الاكشن
@@ -542,12 +607,17 @@ app-child{
               increment() {
                 this.store.dispatch(increment({ value: 2 })); //ازود ب 2 الفانكشن دي بحطها في الكمبوننت
               }
+
           - props: شكل الداتا اللي بجطها في الاكشن
             export const set = createAction(
               '[Counter] Set',
               props<{value: number}>(),
             );
+
           - ممكن نعمل action ويغير في الستور من غير ما نعمل reducer
+          - ofType بعملها امبورت من effects بحدد بيها انهي action هيكمل
+          - { dispatch: false } in effect.ts file //مش هيعمل dispatch لاكشن جديد بعض ما يخلص
+
 
 (435) Angular Universal
           زي ال next في رياكت تخلي السيرفر يشوف الكود الكود يجي من السيرفر كامل SSR حل مشكلة ان الاب لازم يحمل كود الجافاسكريبت كله عشان يشتغل بتتحنل الصفحة مع تكملة تحميل الجافاسكريبت

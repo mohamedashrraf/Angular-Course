@@ -1,0 +1,4 @@
+1 - TodoList لما ادوس تعديل علي خانة تتحول لانبوت و يعدل في انبوت كل خانة لوحدها
+    بتسخدم editedIndex - editedMode لازم يساوو الاندكس بتاعي
+    @if(editMode && editIndex === $index)
+              <td style="width: 25%;"><input [(ngModel)]="editedTask" /></td>
