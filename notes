@@ -1,4 +1,7 @@
- ng new app --standalone false للو عايز اعمل بروجكت فيرجن 17 بس بالموديول زي القديم
+- ng new app --standalone false للو عايز اعمل بروجكت فيرجن 17 بس بالموديول زي القديم
+- npm i @fortawesome/fontawesome-free
+- npm i bootstrap
+- ng add @angular/material
 
  //PARENT TO CHILD @Input()
   //عشان ابعت حاجة من الاب للابن زي البوستات اللي هيلف عليها ويعرضها في الكارد بعمل
@@ -143,8 +146,8 @@ Directives  كلاسات بتديني خصائص اقدر استخدمها
       ngIf و ngClass ممكن يعملوا نفس الحاجة زي انهم يخفوا عنصر بس بينهم اختلاف تغيير ال dom
 
 (6)(97) Custom Directive
-          بتخلي كود الاتشتيامال اللي بحط فيه اسم الدايركتف موجود جوا الدرايركتف اقدر امل خاصية تعدل عليه زي لوب او شرط
-          - ng g directive dir1
+          بتخلي كود الاتشتيامال اللي بحط فيه اسم الدايركتف موجود جوا الدرايركتف اقدر اعمل خاصية تعدل عليه زي لوب او شرط
+          - ng g d dir1
           - in constructor directive بنحط فيه ريفرنس من العنصر بتاع الاتشتيامال elemRef
           - nativeElement = getElementById كاني مسكت العنصر واحطله الخصائص elemRef.nativeElement.style.border="2px solid red"
           - لما نعرف حاجة جوا ال constructor بنقدر نستخدمها في اي حتة جوا الكلاس بتاعه بس نحط قبلها this
@@ -551,7 +554,7 @@ app-child{
               services عشان نستخدمها في standalone component نحط اسمها جوا @Component({providers:[apiServ]}) ياما اسيبها زي ماهيا @Injectable({providedIn: 'root' }) تتشاف في اي حتة
               - routing في انجولر 17 م معندناش فايل appModule عشان نشغل routing بتاع فايل الراوتس بنروع فايل main.ts نحط فيه
                       providers:[ importProvidersForm(AppRoutingModule)]
-              - Angular Material لما نعمل import ونشغل كومبوننت standalone لازم في الموديول بتاعه نحط اسم الكمبوننت في imports مش ال declarations
+              - Any components لما نعمل import ونشغل كومبوننت standalone لازم نحط اسم الكمبوننت في imports مش ال declarations
 
 
 (360) Angular Signals
@@ -628,7 +631,7 @@ app-child{
                 if working on an Angular 17 project (check the package.json file to find out), the correct command to run would be ng add @angular/ssr.
                 Creating Angular SSR Apps with Angular 17+
           - If create a new Angular project that comes with Universal / SSR enabled run .ng new <project-name> --ssr
-            Running a SSR / Universal Project with Angular 17+
+            Running a SSR / Universal Project with Angular 17+ مش بحتاج اتستخدم Angular Universal في مشاريع انجولر 17 عشان هو كده كده لما بعمل بروجكت بيتيح ليا افعل SSR
             All you have to do with Angular 17, is run ng serve. It automatically use SSR if you enabled it via ng add @angular/ssr or ng new <project-name> --ssr.
 
 
@@ -703,8 +706,9 @@ app-child{
           --dry-run يوريني الكوماند هيعمل ايه من غير ما ينفذه
           --routing تعمل راوت موديول
           --skip-tests متعملش فايل spec
-          ng lint لو فيه ايرور يقولي فين
 
+          -ng serve -o يرن ويفتح البراوسر
+          - ng lint لو فيه ايرور يقولي فين
           - ng g @angular/Material:nav main يعمل كمبوننت فيه navbar
           - ng update @angular/core @angular/cli يعمل ابديت للباكدج ولفيرجن انجولر
           - ng g application projectName اعمل بروجكت جديد في نفس البروجكت 2 في واحد
@@ -716,4 +720,13 @@ app-child{
             - npm i --save @angular/elements
             import {createCustomElement} from '@angular/elements' نكريت الكود النيتف في الكمبوننت بياخد createCustomElement من نوع Injector
 
+Angular 17
+        @defer
+        - track in @for تتابع تحديثات قيم العناصر في ال DOM لازم احطها في اللوب
 
+
+Angular Material
+          - ng add @angular/material
+          - style="-webkit-text-fill-color: green;" عشان نحط ستايل معين لعنصر نحط جوا التاجة بتاعته
+                            <mat-icon style="-webkit-text-fill-color: green;">check_circle</mat-icon>
+          -
