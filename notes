@@ -730,3 +730,7 @@ Angular Material
           - style="-webkit-text-fill-color: green;" عشان نحط ستايل معين لعنصر نحط جوا التاجة بتاعته
                             <mat-icon style="-webkit-text-fill-color: green;">check_circle</mat-icon>
           -
+
+Angular HighCharts
+        - npm i angular-highcharts highcharts
+        - نعمل امبورت ل chartModule
