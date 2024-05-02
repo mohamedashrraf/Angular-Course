@@ -3,51 +3,49 @@
 - npm i bootstrap
 - ng add @angular/material
 
- //PARENT TO CHILD @Input()
-  //عشان ابعت حاجة من الاب للابن زي البوستات اللي هيلف عليها ويعرضها في الكارد بعمل
-  //1 [postItem]="post"  في فايل الاب الاتشتيامال postItem الداتا اللي عايز ابعتها وتبقي بنفس الاسم في فايل التايب في الابن  - post القيمة اللي واخدها من ال ngfor من الاب
-  //2 @Input() postItem!: Post; في فايل الابن التايبسكريبت
-  //3 {{ postItem.خاصية }} في فايل الابن الاتشتيامال نحط اللي عايزين نعرضه بنفس الاسم اللي خدناه من الاب
+PARENT TO CHILD @Input()
+    //عشان ابعت حاجة من الاب للابن زي البوستات اللي هيلف عليها ويعرضها في الكارد بعمل
+    //1 [postItem]="post"  في فايل الاب الاتشتيامال postItem الداتا اللي عايز ابعتها وتبقي بنفس الاسم في فايل التايب في الابن  - post القيمة اللي واخدها من ال ngfor من الاب
+    //2 @Input() postItem!: Post; في فايل الابن التايبسكريبت
+    //3 {{ postItem.خاصية }} في فايل الابن الاتشتيامال نحط اللي عايزين نعرضه بنفس الاسم اللي خدناه من الاب
 
-  //عشان اخلي الداتا اللي عايز ابعتها متبقاش بنفس الاسم في فايل التايب في الابن وتبقي باسم انا احدده اعمل Alias
-  //@Input("postAlias") postItem!: Post; كده عملت alias استخدم الاسم ده في الابن مكان postItem
+    //عشان اخلي الداتا اللي عايز ابعتها متبقاش بنفس الاسم في فايل التايب في الابن وتبقي باسم انا احدده اعمل Alias
+    //@Input("postAlias") postItem!: Post; كده عملت alias استخدم الاسم ده في الابن مكان postItem
 
-  @Input() postItem!: Post; // ! عشان محطش initial value postItem خدتها من الاب html
+    @Input() postItem!: Post; // ! عشان محطش initial value postItem خدتها من الاب html
 
-  //CHILD TO PARENT
-  //عشان ابعت من الابن للاب لازم يحصل event
-  //1 (click)="sendToParent(postItem.id)" في فايل الابن الاتشتيامال نكتبها جوا الزرار او اللي المكان اللي عايز اشغل بيه الحدث
-  //2 sendToParent(id: number) {    }  في فايل التايبسكريبت في الابن اكتب بودي الفانكشن اللي عايز انفذها
-  //   @Output() sendPostId = new EventEmitter<number>(); نعرف بروبيرتي من نوع EventEmitter ده المسؤل عن انه يبعت الداتا من الابن للاب ولازم عشان يتم ده يحصل event و sendPostId بيتحط جوا () في الاتشتيامال بتاع الاب
+CHILD TO PARENT
+    //عشان ابعت من الابن للاب لازم يحصل event
+    //1 (click)="sendToParent(postItem.id)" في فايل الابن الاتشتيامال نكتبها جوا الزرار او اللي المكان اللي عايز اشغل بيه الحدث
+    //2 sendToParent(id: number) {    }  في فايل التايبسكريبت في الابن اكتب بودي الفانكشن اللي عايز انفذها
+    //   @Output() sendPostId = new EventEmitter<number>(); نعرف بروبيرتي من نوع EventEmitter ده المسؤل عن انه يبعت الداتا من الابن للاب ولازم عشان يتم ده يحصل event و sendPostId بيتحط جوا () في الاتشتيامال بتاع الاب
 
-  //3 (sendPostId)="receivedFromChild($event)" في فايل اتشتيامال الاب بناخد الاوتبوت اللي عرفته في الابن وشايل قيمة اللي باعته للاب جوا () ولما يجي يشغل الفانكشن اللي فيها ايفنت
-  //4   receivedFromChild(id : any){ this.clickedPostId = id  } في فايل التايبسكريبت بتاع الاب ننفذ بودي الفانكشن تاخد ال id اللي جه من الابن وتحطه في المكان اللي انا عايزه زي العنوان وياخد انتروليشن عشان يتعرض
+    //3 (sendPostId)="receivedFromChild($event)" في فايل اتشتيامال الاب بناخد الاوتبوت اللي عرفته في الابن وشايل قيمة اللي باعته للاب جوا () ولما يجي يشغل الفانكشن اللي فيها ايفنت
+    //4   receivedFromChild(id : any){ this.clickedPostId = id  } في فايل التايبسكريبت بتاع الاب ننفذ بودي الفانكشن تاخد ال id اللي جه من الابن وتحطه في المكان اللي انا عايزه زي العنوان وياخد انتروليشن عشان يتعرض
 
-  // الاقواس اللي علي الشمال زي [postItem] - (sendPostId) بتكون خاصة بالابن واللي علي اليمين خاص بالاب زي "post" - "receivedFromChild($event)"
+    // الاقواس اللي علي الشمال زي [postItem] - (sendPostId) بتكون خاصة بالابن واللي علي اليمين خاص بالاب زي "post" - "receivedFromChild($event)"
 
-  @Output() sendPostId = new EventEmitter<number>();
-  sendToParent(id: number) {
-    console.log("CHILD",id);
-    this.sendPostId.emit(id)  //تنفذ الايفنت وتبعت ال value للاب
-  }
-
-
-  //@Output("postAliasId") sendPostId = new EventEmitter<number>(); كده عملت alias استخدم الاسم ده في الاب مكان postItem
+    @Output() sendPostId = new EventEmitter<number>();
+    sendToParent(id: number) {
+      console.log("CHILD",id);
+      this.sendPostId.emit(id)  //تنفذ الايفنت وتبعت ال value للاب
+    }
+    //@Output("postAliasId") sendPostId = new EventEmitter<number>(); كده عملت alias استخدم الاسم ده في الاب مكان postItem
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Angular Hooks component lifecycle
-- constructor()
-- ngOnchanges() تراقب تغييرات الانبوت تحصل في اي وقت في مراحل الكمبوننت نحط جواها ال @Input
-- *** ngOnInit() اول ما يبدا الكمبوننت انسب مكان لفيتش ال api
-- ngDoCheck() زي ال ngOnchanges مينفعش تتحط وهي موجودة change detection
-- ngAfterContentInit()   // contentChild is set after the content has been initialized نحط contentChild فيها مش هيبان في ال ngOnInit
-- ngAfterContentChecked()
-- *** ngAfterViewInit() لما الكمبوننت يشتغل بالكامل بهاندل فيها الحاجات الخاصة بالفيو زي تاجات الاتشتيامال او @viewChild
-                        لو جيت اعرض viewChild في ال ngOnInit هيرجع قيمة فاضية
-- ngAfterViewChecked() بعد ما حصله تغيير بعد ما اشتغل بالكامل
-- *** ngOnDestroy()
-*** اكتر 3 استخدام
+    - constructor()
+    - ngOnchanges() تراقب تغييرات الانبوت تحصل في اي وقت في مراحل الكمبوننت نحط جواها ال @Input
+    - *** ngOnInit() اول ما يبدا الكمبوننت انسب مكان لفيتش ال api
+    - ngDoCheck() زي ال ngOnchanges مينفعش تتحط وهي موجودة change detection
+    - ngAfterContentInit()   // contentChild is set after the content has been initialized نحط contentChild فيها مش هيبان في ال ngOnInit
+    - ngAfterContentChecked()
+    - *** ngAfterViewInit() لما الكمبوننت يشتغل بالكامل بهاندل فيها الحاجات الخاصة بالفيو زي تاجات الاتشتيامال او @viewChild
+                            لو جيت اعرض viewChild في ال ngOnInit هيرجع قيمة فاضية
+    - ngAfterViewChecked() بعد ما حصله تغيير بعد ما اشتغل بالكامل
+    - *** ngOnDestroy()
+    *** اكتر 3 استخدام
 
 
 - ? علامة استمهام اسمها safe navigation operator بعرف بيها متغير ممكن يجيلي او لا يكون بقيمة او ب null
@@ -226,23 +224,23 @@ Directives  كلاسات بتديني خصائص اقدر استخدمها
 
 
 (12) ViewChild
-  تشير الداتا بين الكمبوننت زي Output بس الفرق بينها وبينه انها تخلي الاب يشوف كل اللي في الابن مش حاجة معينة في
-  وينفع اخلي فايل التايبسكربت يشوف اللي في الاتشتيامال عن طريق ان احط لعنصر الاتشتيامال ريفرنس اندهه بيه في التايبسكربت #
-  1- لو التايبسكربت بيشوف الاتشتيامال
-  @viewChild("inputRef") elemInput!: ElementRef;لازم يتعرف من نوع ElementRef
-  <input #inputRef type="text" />
+      تشير الداتا بين الكمبوننت زي Output بس الفرق بينها وبينه انها تخلي الاب يشوف كل اللي في الابن مش حاجة معينة في
+      وينفع اخلي فايل التايبسكربت يشوف اللي في الاتشتيامال عن طريق ان احط لعنصر الاتشتيامال ريفرنس اندهه بيه في التايبسكربت #
+      1- لو التايبسكربت بيشوف الاتشتيامال
+      @viewChild("inputRef") elemInput!: ElementRef;لازم يتعرف من نوع ElementRef
+      <input #inputRef type="text" />
 
-  ngAfterContentInit(){
-    elemInput.nativeElement.style.border="2px solid red"; غير في خصائص العنصر
-  }
+      ngAfterContentInit(){
+        elemInput.nativeElement.style.border="2px solid red"; غير في خصائص العنصر
+      }
 
-  2- لو الاب بيشوف الابن
-    @viewChild("childComponent") elemComp!: childComponent; بحط اسم الابن من نوع الابن برضو عشان اللي بشوفه هو اوبجكت من اللي فيه
-                                                      elem متغير من الكمبوننت كله
-    @viewChild(childComponent) elemComp!  لو عايز اشوف الكمبوننت ومحتطلوش ريفرنس نحط اسمه علطول من غير سترينج ""
-    ngAfterContentInit(){
-    console.log(this.elemComp.prodName) نعرض اسامي المنتجات اللي في الابن
-  }
+      2- لو الاب بيشوف الابن
+        @viewChild("childComponent") elemComp!: childComponent; بحط اسم الابن من نوع الابن برضو عشان اللي بشوفه هو اوبجكت من اللي فيه
+                                                          elem متغير من الكمبوننت كله
+        @viewChild(childComponent) elemComp!  لو عايز اشوف الكمبوننت ومحتطلوش ريفرنس نحط اسمه علطول من غير سترينج ""
+        ngAfterContentInit(){
+        console.log(this.elemComp.prodName) نعرض اسامي المنتجات اللي في الابن
+      }
 
   الفرق بين Output و viewChild
   Output كل ما يحصل تغير في الابن بيروح يقولي ويبعت للاب
@@ -285,56 +283,50 @@ Directives  كلاسات بتديني خصائص اقدر استخدمها
         - retry لو فيه ايرور تعيد ان اجيب الداتا تاني عد مرات انا احددها لو لسه في مشكلة اعمل catch retry(3), catchError()
         - pipe تنفذ فانكشنز زي فلتر او ماب علي ال Observable قبل ما يتعمله subscribe
 
-    - observer عمل سابسكرايب علي Observable او اكتر
-    - Observable يرجع داتا ويعملها emit لحد ما يتعملها subscribe
-    - Behavior Subject يسمع في الهيدر مثلا لو ضفت حاجة في الكارت او عملت لوج ان
+        - observer عمل سابسكرايب علي Observable او اكتر
+        - Observable يرجع داتا ويعملها emit لحد ما يتعملها subscribe
+        - Behavior Subject يسمع في الهيدر مثلا لو ضفت حاجة في الكارت او عملت لوج ان
 
-    - install RxJS v6 by running:  npm install --save rxjs@6
-      In addition, also install the rxjs-compat package:  npm install --save rxjs-compat
+        - install RxJS v6 by running:  npm install --save rxjs@6
+          In addition, also install the rxjs-compat package:  npm install --save rxjs-compat
 
-    - params, snapshots and interval بيستخدموا ال Observable واعمل عليهم subscribe
+        - params, snapshots and interval بيستخدموا ال Observable واعمل عليهم subscribe
 
--operators on Observable عشان نغير في شكل الداتا اللي راجعالي نعمل عليها operator زي map, filter تتحط جوا فانكشن pipe
-                        مش محتاج اعمل subscribe طالما عامل pipe لانها بتعمل السابسكريب
+        -operators on Observable عشان نغير في شكل الداتا اللي راجعالي نعمل عليها operator زي map, filter تتحط جوا فانكشن pipe
+                            مش محتاج اعمل subscribe طالما عامل pipe لانها بتعمل السابسكريب
 
-    - Subject تشتغل مكان ال eventemitter و ال output
-      activatedEmitter = new Subject<boolean>();
-      this.userService.activatedEmitter.next(true) ستخدم معاه فانكشن next عشان اغير في حالة الداتا بعد كده
+        - Subject تشتغل مكان ال eventemitter و ال output
+          activatedEmitter = new Subject<boolean>();
+          this.userService.activatedEmitter.next(true) ستخدم معاه فانكشن next عشان اغير في حالة الداتا بعد كده
 
 
 
 (19)(150) Guard  مترضاش تدحلني مثلا علي الهوم غير لما اعمل لوج ان لما ادوس علي الهوم تعمل دايركت للوج ان
-  types:  1- CanActivate يتنفذ او ما يفتح روت معين لو دخلت ع الهوم ومش عامل لوج ان تسمح بالدخول او لا
-          2- CanActivateChild
-          3- CanDeactivate عكس ال CanActivate لما اسيب صفحة فورم مثلا وفيها داتا مش محفوظة ممكن تروح تسمح بالخروج او لا
-          4- CanLoad
-  ng g g AuthGuard
-  نروح للراوت بتاع الكمبوننت اللي عايزين نحط شروط علي الدخول فيه ونكتب { Path: 'Comp1', component:comp1, canActivate[AuthGuard]}
-  مش هيدخل الكمبوننت غير لما يحقق الجارد
+      types:  1- CanActivate يتنفذ او ما يفتح روت معين لو دخلت ع الهوم ومش عامل لوج ان تسمح بالدخول او لا
+              2- CanActivateChild
+              3- CanDeactivate عكس ال CanActivate لما اسيب صفحة فورم مثلا وفيها داتا مش محفوظة ممكن تروح تسمح بالخروج او لا
+              4- CanLoad
+      ng g g AuthGuard
+      نروح للراوت بتاع الكمبوننت اللي عايزين نحط شروط علي الدخول فيه ونكتب { Path: 'Comp1', component:comp1, canActivate[AuthGuard]}
+      مش هيدخل الكمبوننت غير لما يحقق الجارد
 
-   canActivateChild(route: ActivatedRouteSnapshot, //تخليني امنع الدخول علي ال children routes مش الراوت اللي محتويهم servers وبنده الجارد في الراوت الكبير
-                   state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    return this.canActivate(route, state);
-  }
-  // {path: 'servers',canActivateChild: [AuthGuard],component: ServersComponent,
-  //   children: [
-  //   { path: ':id', component: ServerComponent, resolve: {server: ServerResolver} },
-  //   { path: ':id/edit', component: EditServerComponent, canDeactivate: [CanDeactivateGuard] }] },
+      canActivateChild(route: ActivatedRouteSnapshot, //تخليني امنع الدخول علي ال children routes مش الراوت اللي محتويهم servers وبنده الجارد في الراوت الكبير
+                      state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+        return this.canActivate(route, state);
+      }
+      // {path: 'servers',canActivateChild: [AuthGuard],component: ServersComponent,
+      //   children: [
+      //   { path: ':id', component: ServerComponent, resolve: {server: ServerResolver} },
+      //   { path: ':id/edit', component: EditServerComponent, canDeactivate: [CanDeactivateGuard] }] },
 
 
 (20) JSON Server باكدج من npm تخليني اعمل Custom Api
 
-Environment
-export const environment = {
-    baseURL: 'https://api.noroff.dev/api/v1'
-}; عشان لو بيقرا من كذه api نغير مكان القراية من هنا منعدلش فيهم كلهم
-ممكن لينك ال api يتغير او بيحصل تكرار كتير لنفس اللينك فنحطه في environment
 
 (21)
-addGame(newPrd : Game) {
-    return this.httpClient.post<Game>(`${environment.baseURL}/gamehub/`,JSON.stringify(newPrd),this.httpOption) //نضيف منتج جديد للداتابيز
-  }// لازم نبعت الهيدر من نوع json واحنا بنضيف داتا زي ما بنعمل في بوست مان عشان كده بعرف الهيدر في httpOption واستدعيها
-
+    addGame(newPrd : Game) {
+        return this.httpClient.post<Game>(`${environment.baseURL}/gamehub/`,JSON.stringify(newPrd),this.httpOption) //نضيف منتج جديد للداتابيز
+      }// لازم نبعت الهيدر من نوع json واحنا بنضيف داتا زي ما بنعمل في بوست مان عشان كده بعرف الهيدر في httpOption واستدعيها
 
 
 Model
@@ -390,10 +382,8 @@ app-child{
         }
       )
     -  { path: '', redirectTo: '/recipes', pathMatch: 'full' }, مينفعش اعمل دايركت والباث فاضي "" لانه كده هيبقي عايز يدايركت علي كل الباثث عشان هو جزء منهم كلهم هيعمل ايرور لازم احط pathMatch: 'full' عشان اقوله ان ده الباث كله
-
     { path: 'new', component: RecipeEditComponent}, //و حطينا الراوت بتاعها تحت راوت الاي دي يعمل ايرور لانه هيفتكر كلمة new هي اي دي
     { path: ':id', component: RecipeDetailComponent }, //لازم الاي دي الداينامك يبقي اخر راوت عشان ميفتكرش الراوت اللي بعده اي دي زيه
-
     this.router.navigate(['../', this.id, 'edit'], {relativeTo: this.route}) لو عايزين نرجع بالباث خطوة لورا ونروح اي صفحة
 
 
@@ -401,10 +391,8 @@ app-child{
       1- Template Driven بنحتاج نعمل فيها امبورت ل formModule
           <form #gameForm ="ngForm" (ngSubmit)="handleFormSubmit(gameForm)"> نساويها بريفرانس ngForm تجمع الداتا وتديها للفورم
           @viewChild('gameForm') game!: ngForm; //ممكن نستخدم ال viewChild في اننا نوصل للفورم عن طريق الريفرنس
-
           - ng-invalid نحط ستايل لما يكون الانبوت مش مكتوب فيه داتا مظبوطة  ng-touched لما ادوس ع الانبوت
               input.ng-invalid{color:red}
-
 
       2- Reactive Forms بنحتاج نعمل فيها امبورت ل ReactiveformModule
 
@@ -412,7 +400,6 @@ app-child{
           (<FormArray>this.recipeForm.get('ingredients')).clear();
           The clear() method automatically loops through all registered FormControls (or FormGroups) in the FormArray and removes them.
           Its like manually creating a loop and calling removeAt() for every item.
-
 
 
 (274) httpClient
@@ -466,9 +453,7 @@ app-child{
     ".write": "auth != null"
     }
 
-
 (305) diff between subject and BehaviourSubject
-
       Subject بعمله سبسكرايب واخد الداتا الجديدة مبياخدش قيمة معاه
       BehaviourSubject: بعمله سبسكرايب واخد الداتا الجديدة واقدر اوصل لقيم الداتا السابقة او اليوزر اللي عامل لوجن اللي اتعملت قبل ما اعمل سبسكرايب بياخد قيمة معاه
 
@@ -477,8 +462,6 @@ app-child{
 
 
 (317) Component Factory Resolver استدعيها في الكونستراكتور تخليني اكريت نسخة من كمبوننت موجود عندي Deprecated بيستخدموا مكانها viewContainerRef
-
-
 
 (329) Modules
       exports: [ //بعمل للكمبوننت بتاعت اكسبورت لما اعوز استخدمهم برا الموديول
@@ -498,10 +481,8 @@ app-child{
                   RouterModule.forChild([{ path: '', component: AuthComponent }]),
                   SharedModule
                 ]
-
         لو عملت declare لكمبوننت معينة في موديول مقدرش اعملها declare في حتة تانية انما اقدر اعملها امبورت اكتر من مرة
-
-          Core Module موديول بحط فيه الحاجات اللي في provided زي services Interceptor بحطه جنب appModule
+        Core Module موديول بحط فيه الحاجات اللي في provided زي services Interceptor بحطه جنب appModule
 
 
 (336) Lazy Loading
@@ -513,13 +494,13 @@ app-child{
       exports: [RouterModule]
     })
 
-
 (344) Environment
+      تعدل اللينكات الستاتيك نعرف الجزء المتكرر في متغير
+      //عشان لو بيقرا من كذه api نغير مكان القراية من هنا منعدلش فيهم كلهم
       export const environment = {
           baseURL: 'https://api.noroff.dev/api/v1'
-      };
-      //environment تعدل اللينكات الستاتيك نعرف الجزء المتكرر في متغير
-      //عشان لو بيقرا من كذه api نغير مكان القراية من هنا منعدلش فيهم كلهم
+      }; عشان لو بيقرا من كذه api نغير مكان القراية من هنا منعدلش فيهم كلهم
+      ممكن لينك ال api يتغير او بيحصل تكرار كتير لنفس اللينك فنحطه في environment
 
 
 (346) Firebase
@@ -561,11 +542,15 @@ app-child{
         طريقة تسهل كتابة الكود زي React Hooks بالظبط بتخليني استغني عن حاجات كنت بستخدمها من rxjs
         -Example كاونتر ادوس زرار يزود وينقص بحد قيمة ابتدائية ليه counter=signal(0) ينفع احط فيمة للسيجنال برقم او سترنج او اي نوع داتا
                   واجي اعمل بايند علي الكاونتر {{counter()}} لازم نحط قوسين فانكشن
-        - نستخدم معاها فانكشن update, mutate بتاخد كول باك فانكشن البراميتر القيمة القديمة ويرجع القيمة الجديدة
+        - نستخدم معاها فانكشن update, mutate بتاخد كول باك فانكشن البراميتر القيمة القديمة ويرجع القيمة الجديدة this.todoSig.update((todos)=>[...todos, newTodo]) كل ما ياخد قيمة جديدة يضيفها في ارراي
                                 set ناخد القيمة الجديدة علطول
                                 computed تاخد فانكشن جواها كفاليو براميتر فاضي وترجع القمة بناءا علي السيجنال computed(()=> this.c*2) القيمة اللي بترجع تعتمد علي قيمة اللي جاية من السيجنال بتعملها عملية حسابية مثلا
                                 effect نستخدمها في الكونستراكتور او ngOnInit بترن الكود اللي جاي من السيجنال بتاخد كول باك فانكشن
-
+        - اقدر اعمل for علي اللي المتغير المتعرف ب signal
+            @for (todo of todosService.todoSig(); track $index) {
+                <li class="todo-item">{{todo.text}}</li>}
+                لو مكنتش استخدمت سيجنال كنت هحط في ارراي ولو بيرجع Observable اعملها subscribe
+        - computed() فانكشن بستخدمها مع السيجنال تحسب
 
 (370) NgRx
           state management باكدج بنزلها بتعمل عمل السيرفس تدير وتستخدم في الكمبوننتس هي مش بتزود حاجة عن السيرفس بين ممكن نستخدمها في المشاريع الكبيرة
@@ -734,3 +719,7 @@ Angular Material
 Angular HighCharts
         - npm i angular-highcharts highcharts
         - نعمل امبورت ل chartModule
+
+
+??????
+enum -- computed function --
