@@ -709,17 +709,19 @@ Angular 17
         @defer
         - track in @for تتابع تحديثات قيم العناصر في ال DOM لازم احطها في اللوب
 
-
-Angular Material
-          - ng add @angular/material
-          - style="-webkit-text-fill-color: green;" عشان نحط ستايل معين لعنصر نحط جوا التاجة بتاعته
-                            <mat-icon style="-webkit-text-fill-color: green;">check_circle</mat-icon>
-          -
-
 Angular HighCharts
         - npm i angular-highcharts highcharts
         - نعمل امبورت ل chartModule
 
-
-??????
-enum -- computed function --
+Angular Material موقع material io
+      - ng add @angular/material
+      - style="-webkit-text-fill-color: green;" عشان نحط ستايل معين لعنصر نحط جوا التاجة بتاعته
+                        <mat-icon style="-webkit-text-fill-color: green;">check_circle</mat-icon>
+      - ::ngdeep لو عنصر مخدش الستايل اللي ادتهوله بجبره انه ياخد الستايل ده
+      - 3 types of colors primary - warn - accent
+      - desableRippple نخلي الزرار ديسابول
+      - toogleGroup زي ال radioButton يحدد قسمة واحدة
+      - matBadge ايونة للاشعارات لو خليناها matBadgeOverlap=false بخلي البادج بعيد عن الكلام
+                <span [matBadge]='notfication' [matBadgeHidden]='notfication=0'></span> بعرف البروبرتي في التايبسكربت ويعمل زي if لو في اشعارات اظهر لو مفيش اخفيه
+      - mat-menu ليها اتربيوت اسمه [matMenuTriggerFor]="menu name" بحطه في تاجه زرار اديله اسم مينز لما يدوس عليه يفتحها
+                [matMenuTriggerData]="name1" تاخد معلومات اضافية زي الاسم اقدر اعمل عليها بايند واظهرها في المنيو let-name="name1" {{name1}}
