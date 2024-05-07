@@ -3,6 +3,9 @@
 - npm i bootstrap
 - ng add @angular/material
 
+- event.target بيتعرف من نوع HTMLInputElement
+- <T> data type is geniric type بيشتغل مع اي داتا تايب زي  any
+
 PARENT TO CHILD @Input()
     //عشان ابعت حاجة من الاب للابن زي البوستات اللي هيلف عليها ويعرضها في الكارد بعمل
     //1 [postItem]="post"  في فايل الاب الاتشتيامال postItem الداتا اللي عايز ابعتها وتبقي بنفس الاسم في فايل التايب في الابن  - post القيمة اللي واخدها من ال ngfor من الاب
@@ -250,8 +253,8 @@ Directives  كلاسات بتديني خصائص اقدر استخدمها
 (86) contentChild
       access Elements/Components projected using <ng-content> العناصر او التاجات اللي جواها
 
-
-(16)(173) Observable
+RxJs
+  (16)(173) Observable
       نتعامل جواه مع 3 فانكشنز next - error - complete
       let addObservable=new Observable ((obs=>{
         obs.next(); يروح يجيب الداتا زي then في البروميس
@@ -269,8 +272,6 @@ Directives  كلاسات بتديني خصائص اقدر استخدمها
                     ngOnDestroy(): void {this.activatedSub.unsubscribe();}
                     Observable.complete() مش محتاج اعمل unsubscribe لو عملت complete
                     Subscription طريقة تعريف هو البيست براكتس لل Observable  import {subscribtion} from rxjs;
-
-
     (17) Hot Observable بيعمل emit من غير ما يستني يسابسكرايب
         Cold Observable مينفذش اي حاجة لا لما يعمل سبسكرايب
 
@@ -282,19 +283,14 @@ Directives  كلاسات بتديني خصائص اقدر استخدمها
         - of يلوب علي عناصر ويعرضها   return of("num1","num2","num3")
         - retry لو فيه ايرور تعيد ان اجيب الداتا تاني عد مرات انا احددها لو لسه في مشكلة اعمل catch retry(3), catchError()
         - pipe تنفذ فانكشنز زي فلتر او ماب علي ال Observable قبل ما يتعمله subscribe
-
         - observer عمل سابسكرايب علي Observable او اكتر
         - Observable يرجع داتا ويعملها emit لحد ما يتعملها subscribe
         - Behavior Subject يسمع في الهيدر مثلا لو ضفت حاجة في الكارت او عملت لوج ان
-
         - install RxJS v6 by running:  npm install --save rxjs@6
           In addition, also install the rxjs-compat package:  npm install --save rxjs-compat
-
         - params, snapshots and interval بيستخدموا ال Observable واعمل عليهم subscribe
-
         -operators on Observable عشان نغير في شكل الداتا اللي راجعالي نعمل عليها operator زي map, filter تتحط جوا فانكشن pipe
                             مش محتاج اعمل subscribe طالما عامل pipe لانها بتعمل السابسكريب
-
         - Subject تشتغل مكان ال eventemitter و ال output
           activatedEmitter = new Subject<boolean>();
           this.userService.activatedEmitter.next(true) ستخدم معاه فانكشن next عشان اغير في حالة الداتا بعد كده
