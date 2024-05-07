@@ -721,3 +721,4 @@ Angular Material موقع material io
                 <span [matBadge]='notfication' [matBadgeHidden]='notfication=0'></span> بعرف البروبرتي في التايبسكربت ويعمل زي if لو في اشعارات اظهر لو مفيش اخفيه
       - mat-menu ليها اتربيوت اسمه [matMenuTriggerFor]="menu name" بحطه في تاجه زرار اديله اسم مينز لما يدوس عليه يفتحها
                 [matMenuTriggerData]="name1" تاخد معلومات اضافية زي الاسم اقدر اعمل عليها بايند واظهرها في المنيو let-name="name1" {{name1}}
+      - ErrorStateMatcher بتخليني احط شروط من عندي لو متحققتش يعمل error
