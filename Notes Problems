@@ -34,6 +34,23 @@
               // console.log(this.filteredWeatherList)
             }
           }
+      لو السيرش هيتعمل انبوت في كمبوننت الاب ويفلتر في كمبوننت ابن الابن ده واخد شيرد كمبوننت
+      نخلي الكلام اللي هكتبه في يتحط في ال param واقرا من ال param
+      نعمل فانكشن في الاب   onSearchChange(): void {
+                              this.router.navigate([], {
+                                queryParams: { search: this.searchTitle },
+                                queryParamsHandling: 'merge'
+                              });
+                            }
+      وفي الابن السيرش نفسه   searchPosts(): void {
+                                if (this.searchTitle) {
+                                  this.searchedPosts = this.posts.filter(post =>
+                                    post.title.toLowerCase().includes(this.searchTitle.toLowerCase())
+                                  );
+                                } else {
+                                  this.searchedPosts = this.posts;
+                                }
+                              }
 
 4- Query Params لما اكلك اداتا في البارام في اللينك في كمبوننت و الكمبوننت التاني ياخد هناك الداتا دي من اللينك ويعرضها عنده
           navigateToWeather(city: string, temperature: number ) { بحط الداتا
@@ -89,3 +106,33 @@
 
 6- @if & ngClass لو عايز اخفي حاجة او اظهرها تحت شرط معين
           [ngClass]="{ 'hidden': noTodosClass()}" ممكن استخدم ngClass بدل if بس if افضل
+
+7- active class on header tab
+        عشان نظهر ال active class من غير راوتر علي تابة نعمل ngClass تاخد الكلاس لما يحقق الشرط
+           <li [ngClass]="{'active-navigation': isActive('1')}" (click)="setActive('1'); navigateWithQueryParam('pstatus', '1')">
+        <p>Published</p> الشرط هنا ان ال status بتاعته تبقي ب 1 وعشان تبقي ب 1 ادوس علي التابة تنفذ setActive و يتاكد انها ب 1 من فانكشن isActive ويحط الكلاس
+    </li>
+
+
+8- call multiple functions
+      <li (click)="toggleAddfilterCols(); selectFilter('Author')">
+            <p>Author</p>
+          </li>
+
+9- when click on icon in menu it is selected in selectbox
+      نعمل فانكشن تاخد الفاليو براميتر في المنيو ونعمل ngModel في ال selectbox
+       selectFilter(filter: string) {
+    this.selectedFilter = filter}
+    <ul>
+          <li (click)="toggleAddfilterCols(); selectFilter('Date')">
+            <p>Date</p>
+          </li>
+          <li (click)="toggleAddfilterCols(); selectFilter('Time')">
+            <p>Time</p>
+          </li>
+        </ul>
+        <select name="filterSelect" id="filterSelect" [(ngModel)]="selectedFilter">
+                <option value="Date">Date</option>
+                <option value="Time">Time</option>
+              </select>
+

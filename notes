@@ -5,6 +5,10 @@
 
 - event.target بيتعرف من نوع HTMLInputElement
 - <T> data type is geniric type بيشتغل مع اي داتا تايب زي  any
+- call multiple functions
+      <li (click)="toggleAddfilterCols(); selectFilter('Author')">
+            <p>Author</p>
+          </li>
 
 PARENT TO CHILD @Input()
     //عشان ابعت حاجة من الاب للابن زي البوستات اللي هيلف عليها ويعرضها في الكارد بعمل
