@@ -20,7 +20,7 @@
         })
       }
 
-3- Search باستخدام filter
+3- Search باستخدام filter function
           searchWeatherList() {
             if (!this.searchText) {
               this.filteredWeatherList = this.weatherList;
@@ -51,6 +51,16 @@
                                   this.searchedPosts = this.posts;
                                 }
                               }
+  Shared Search Component عشان اعمل بحث في كمبوننت من السيرش الشيرد
+          باخد انبوت من الكمبوننت يروح للسيرش يحط فيه اللي بكتبه في التكستبوكس والسيرش يرجع اوتبوت للكمبوننت باللي كتبته كله عشان ياخده يفلتر عليه ويطلع النتايج
+            @Input() searchTitle!: string;
+            @Output() onInput: EventEmitter<{ searchValue: string }> = new EventEmitter<{ searchValue: string }>();
+                <input type="search" name="search" id="search" [(ngModel)]="searchTitle" (input)="onInput.emit({searchValue:searchTitle})" placeholder="Search..." /> (input) Event معناها اي تغيير يحصل في الانبوت او اللي بكتبه في الانبوت
+            searchPosts(search: { searchValue: string }) {}
+              <app-search class="searchInput" (onInput)="searchPosts($event)"></app-search>
+      السيرش يشتغل لما ادوس apply
+                      <button class="filterBtn" (click)="applyFilter(); onInput.emit({searchValue:searchTitle})">Apply</button>
+
 
 4- Query Params لما اكلك اداتا في البارام في اللينك في كمبوننت و الكمبوننت التاني ياخد هناك الداتا دي من اللينك ويعرضها عنده
           navigateToWeather(city: string, temperature: number ) { بحط الداتا
@@ -121,7 +131,7 @@
 
 9- when click on icon in menu it is selected in selectbox
       نعمل فانكشن تاخد الفاليو براميتر في المنيو ونعمل ngModel في ال selectbox
-       selectFilter(filter: string) {
+      selectFilter(filter: string) {
     this.selectedFilter = filter}
     <ul>
           <li (click)="toggleAddfilterCols(); selectFilter('Date')">
@@ -136,3 +146,40 @@
                 <option value="Time">Time</option>
               </select>
 
+10- sort from shared Component
+          جوا كمبوننت sort مبعملش حاجة غير emit للاوتبوت اللي هبعته عشان يشوف انا اختارت ايه والداتا بتاعتي في الكمبوننت اللي عايز استخدم السورت فيه
+          واخد انبوت في الداتا من الاب اللي عايز اعرضها عندي او اختار منها عشان الداتا دي متغيرة علي حسب الكمبوننت اللي بستخدمها فيه
+            //////sort//////
+            selectedSortColumn: string = "";
+              isDescending: boolean = false;
+              @Input() sortOptions: { key: string, displayName: string }[] = [];
+              @Output() sortCriteria = new EventEmitter<{ sortColumn: string, isDescending: boolean }>() علمنا اوتبوت واحد ي emit اوبجكت بدل ما اعمل 2 اوتبوت
+              applySort() {
+                this.sortCriteria.emit({ sortColumn: this.selectedSortColumn, isDescending: this.isDescending });
+              }
+          //////blog///////
+                      sortPosts(sortCriteria: { sortColumn: string, isDescending: boolean }) {
+              const { sortColumn, isDescending } = sortCriteria;
+              this.apiBlogService.getPostsBySort(sortColumn, isDescending).subscribe({
+                next: (res: any) => {
+                  if (res.data) {
+                    this.searchedPosts = res.data;
+                    console.log(this.searchedPosts);
+                  }
+                },
+                error: (err) => {
+                  console.error(err);
+                }
+              })
+            }
+            <app-sort [sortOptions]="tableData" (sortCriteria)="sortPosts($event)"></app-sort> sortCriteria عبارة عن Event binding
+
+            Event Binding: The syntax (sortCriteria)="sortPosts($event)" binds the sortCriteria event from the SortComponent to the sortPosts method in the BlogComponent.
+            EventEmitter: In SortComponent, sortCriteria is an EventEmitter that emits an object containing sortColumn and isDescending when the user clicks the Apply button.
+            $event: The $event is a special variable in Angular templates that holds the data emitted by the EventEmitter. In this case, it is an object with sortColumn and isDescending.
+            Method Call: When sortCriteria emits an event, Angular automatically calls the sortPosts method in BlogComponent and passes the emitted data ({ sortColumn: string, isDescending: boolean }) as the argument.
+
+
+
+11- ngDefaultControl تخليني اطبق ال ngModel علي الديف
+                <div class="selected-option custom-select" (click)="toggleDropdown()" [(ngModel)]="isDescending" ngDefaultControl>
