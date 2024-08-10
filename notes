@@ -305,8 +305,8 @@ RxJs
       types:  1- CanActivate يتنفذ او ما يفتح روت معين لو دخلت ع الهوم ومش عامل لوج ان تسمح بالدخول او لا
               2- CanActivateChild تعمل تفس وظيفة canActivate بس للراوتس الابناء
               3- CanDeactivate عكس ال CanActivate لما اسيب صفحة فورم مثلا وفيها داتا مش محفوظة ممكن تروح تسمح بالخروج او لا
-              4- CanLoad
-              5- 
+              4- CanLoad تخلي ال guard lazy loading بعمل امبورت للراوت بتاعها زي ال lazy component بالظبط
+              5- Resolve تفيتش الداتا قبل ما يراوت علي صفحة او كمبوننت زي لما يجيب داتا يوزر قبل ما يفتح صفحة البروفايل
       ng g g AuthGuard
       نروح للراوت بتاع الكمبوننت اللي عايزين نحط شروط علي الدخول فيه ونكتب { Path: 'Comp1', component:comp1, canActivate[AuthGuard]}
       مش هيدخل الكمبوننت غير لما يحقق الجارد
