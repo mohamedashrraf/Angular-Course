@@ -28,7 +28,7 @@ CHILD TO PARENT
     //   @Output() sendPostId = new EventEmitter<number>(); نعرف بروبيرتي من نوع EventEmitter ده المسؤل عن انه يبعت الداتا من الابن للاب ولازم عشان يتم ده يحصل event و sendPostId بيتحط جوا () في الاتشتيامال بتاع الاب
 
     //3 (sendPostId)="receivedFromChild($event)" في فايل اتشتيامال الاب بناخد الاوتبوت اللي عرفته في الابن وشايل قيمة اللي باعته للاب جوا () ولما يجي يشغل الفانكشن اللي فيها ايفنت
-    //4   receivedFromChild(id : any){ this.clickedPostId = id  } في فايل التايبسكريبت بتاع الاب ننفذ بودي الفانكشن تاخد ال id اللي جه من الابن وتحطه في المكان اللي انا عايزه زي العنوان وياخد انتروليشن عشان يتعرض
+    //4   receivedFromChild(id : any){ this.clickedPostId = id  } في فايل التايبسكريبت بتاع الاب ننفذ بودي الفانكشن تاخد ال id اللي جه من الابن وتحطه في المكان اللي انا عايزه زي العنوان وياخد انتربوليشن عشان يتعرض
 
     // الاقواس اللي علي الشمال زي [postItem] - (sendPostId) بتكون خاصة بالابن واللي علي اليمين خاص بالاب زي "post" - "receivedFromChild($event)"
 
@@ -41,7 +41,7 @@ CHILD TO PARENT
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-Angular Hooks component lifecycle
+Angular component lifecycle
     - constructor()
     - ngOnchanges() تراقب تغييرات الانبوت تحصل في اي وقت في مراحل الكمبوننت نحط جواها ال @Input
     - *** ngOnInit() اول ما يبدا الكمبوننت انسب مكان لفيتش ال api
@@ -68,13 +68,14 @@ Angular Hooks component lifecycle
 
 Binding طريقة تخلي html و ts يكلموا بعض بدل استخدام ال dom
   //binding 4 انواع
-  //one way from ts to html => 3 types 1 - interpolation { { } }
-  //2 - property binding[] <img [src]="userObj.profilePic" /> للصور عشان بتكون داينامك سورس الصورة او للزرار ال disabled
-          //property binding قيمة ديناميك بتتغير في التايبسكربت مش ثابتة []
-          // امثلة ليها زي الصور - الفاليو بتاعت الانبوت زي التكست بوكس - الزرار ال disabled
-  //3 - enent binding((click) = "function()" > - change ...) لما ادوس علي زرار او الماوس او اعمل حدث يعمل بايند من فايل الاتشتيامال للتايبسكربت
+  one way from ts to html => 3 types
+    1 - interpolation { { } }
+    2 - property binding[] <img [src]="userObj.profilePic" /> للصور عشان بتكون داينامك سورس الصورة او للزرار ال disabled
+          قيمة ديناميك بتتغير في التايبسكربت مش ثابتة []
+          امثلة ليها زي الصور - الفاليو بتاعت الانبوت زي التكست بوكس - الزرار ال disabled
+    3 - enent binding((click) = "function()" > - change ...) لما ادوس علي زرار او الماوس او اعمل حدث يعمل بايند من فايل الاتشتيامال للتايبسكربت
 
-  // two way binding  [(ngModel)]
+  two way binding  [(ngModel)]
     // نعمل انواع binding دي عشان لو اتغيرت قيم الخصائص علي حسب اللي جاية من الداتابيز
     //لازم اعملها import formModules
     //عبارة عن event تشوف التغيرات او اللي اكتبه جديد في الانبوت + property binding يبايند القيمة الديناميك بتاعت الts
@@ -100,7 +101,6 @@ Binding طريقة تخلي html و ts يكلموا بعض بدل استخدام
       <h4>Name : {{ userObj.name }}</h4>
       <h4>Age : {{ userObj.age }}</h4>
 
-
 porperty binding
     <button class="btn btn-primary" [disabled]="!userObj.isAdmin"> اخلي الزرار ديسابول عند حاجة معينة او بعد كام ثانية او لو هو مش ادمن
       delete user
@@ -120,7 +120,7 @@ porperty binding
     <!-- two way binding from ts to html and reverse used in form items only -->
     <input class="form-control my-3" [(ngModel)]="username" />
     <!--دمجت الخطوتين اختصارا للخطوتين اللي فوق-->
-    <!--تاخد القيمة محمود في الانبوت محطوطة جاهزة واول ما اغير فيها جوا الانبوت تتغير في اليوزر-->
+    <!--تاخد القيمة في الانبوت محطوطة جاهزة واول ما اغير فيها جوا الانبوت تتغير في اليوزر-->
     <!-- [()] banana in the box => [value] + (change) -->
 
     [(ngModel)]="username" === in html: (input)=fun($event) in ts: fun(event){event.target.value} عشان اخلي ايفنت بايند زي ال ngModel
@@ -135,7 +135,7 @@ porperty binding
 
 
 (4) الفرق بين ال model vs viewModel
-        model ان اي حاجة جاية من الداتا بيز تتحط في كاتجوري معين ليهم id اي اي جدول في الداتا بيز ليه موديل بيعبر عن الداتا بتاعه
+        model ان اي حاجة جاية من الداتا بيز تتحط في كاتجوري معين ليهم id اي جدول في الداتا بيز ليه موديل بيعبر عن الداتا بتاعه
         viewModel شكل مختصر للموديل باخد منه الداتا اللي عايزها عشان استخدمها او اعملها bind  ليها اسم
                   زي ان يكون عندي موديل فيه 100 عنصر مش محتاج منه غير 5 بعملهم في فيو موديل
 
@@ -145,10 +145,10 @@ porperty binding
 Directives  كلاسات بتديني خصائص اقدر استخدمها
     3 types
       - component هي التاجة اللي بتعبر عن الكمبوننت في الاتشتيمال <app-directive-examples></app-directive-examples> السليكتور اللي في اول فايل التايبسكربت selector: 'app-directive-examples'  بتخليني استدعي الكمبوننت باسمه في التاجة
-      - structural([ngIf] - [ngFor] - [ngSwitch]) تغير في ال dom
-      - attribute directives([ngClass] - [ngStyle] - [ngModel]) تستخدم في الستايل اكتر تغير في العنصر زي انها تخفيه
+      - structural ([ngIf] - [ngFor] - [ngSwitch]) تغير في ال dom
+      - attribute ([ngClass] - [ngStyle] - [ngModel]) تستخدم في الستايل اكتر تغير في العنصر زي انها تخفيه
       كلاسات بضيفها تخليني اخفي او اظهر حاجة او اغير في الستايل
-      ngIf و ngClass ممكن يعملوا نفس الحاجة زي انهم يخفوا عنصر بس بينهم اختلاف تغيير ال dom
+      ngIf و ngClass ممكن يعملوا نفس الحاجة زي انهم يخفوا عنصر بس بينهم اختلاف ان if تغير في ال dom
 
 (6)(97) Custom Directive
           بتخلي كود الاتشتيامال اللي بحط فيه اسم الدايركتف موجود جوا الدرايركتف اقدر اعمل خاصية تعدل عليه زي لوب او شرط
@@ -173,9 +173,7 @@ Directives  كلاسات بتديني خصائص اقدر استخدمها
 
 (111)Alternative Injection Syntax
     Injecting services (or, in general: dependencies) into components via the constructor functions is the most common way of perform such injections. You'll see this approach in most Angular projects you'll be working on.
-
     However, there also is an alternative way of injecting dependencies: Via Angular inject() function.
-
     Instead of injecting LoggingService like this:
 
     @Component(...)
@@ -187,7 +185,6 @@ Directives  كلاسات بتديني خصائص اقدر استخدمها
     you could inject it like this, by using the inject() function:
 
     import { Component, Input, Output, inject } from '@angular/core'; // <- Add inject import
-
     @Component(...)
     export class AccountComponent {
       // @Input() & @Output() code as shown in the previous lecture
@@ -198,10 +195,8 @@ Directives  كلاسات بتديني خصائص اقدر استخدمها
       }
     }
     It's totally up to you, which approach you prefer. In this course (and, as mentioned, in most projects), we'll use the constructor approach.
-
     A Different Way Of Injecting Services
         If you are using Angular 6+ (check your package.json  to find out), you can provide application-wide services in a different way.
-
         Instead of adding a service class to the providers[]  array in AppModule , you can set the following config in @Injectable() :
 
         @Injectable({providedIn: 'root'})
@@ -209,17 +204,13 @@ Directives  كلاسات بتديني خصائص اقدر استخدمها
         This is exactly the same as:
 
         export class MyService { ... }
-        and
-
         import { MyService } from './path/to/my.service';
-
         @NgModule({
             ...
             providers: [MyService]
         })
         export class AppModule { ... }
         Using this syntax is completely optional, the traditional syntax (using providers[] ) will also work.
-
         The "new syntax" does offer one advantage though: Services can be loaded lazily by Angular (behind the scenes) and redundant code can be removed automatically. This can lead to a better performance and loading speed - though this really only kicks in for bigger services and apps in general.
 
 (7)(249) Custom Pipe
@@ -299,10 +290,11 @@ RxJs
           activatedEmitter = new Subject<boolean>();
           this.userService.activatedEmitter.next(true) ستخدم معاه فانكشن next عشان اغير في حالة الداتا بعد كده
 
+    - defer صندوق مقفول مبعرفش حاجة عن ال obs اللي فيه الا لما اعمل subscribe ويرجع fresh obs
 
 
 (19)(150) Guard  مترضاش تدحلني مثلا علي الهوم غير لما اعمل لوج ان لما ادوس علي الهوم تعمل دايركت للوج ان
-      types:  1- CanActivate يتنفذ او ما يفتح روت معين لو دخلت ع الهوم ومش عامل لوج ان تسمح بالدخول او لا
+      types:  1- CanActivate يتنفذ اول ما يفتح راوت معين لو دخلت ع الهوم ومش عامل لوج ان تسمح بالدخول او لا
               2- CanActivateChild
               3- CanDeactivate عكس ال CanActivate لما اسيب صفحة فورم مثلا وفيها داتا مش محفوظة ممكن تروح تسمح بالخروج او لا
               4- CanLoad
@@ -335,7 +327,7 @@ Model
  models:Model1[]=new Model1[{"name","age","****"}]
 
 (79)
-<app-child><p>mmmmmmmmmm</p></app-child> لو كتبنا اي حاجة جوا تاجة في الكمبوننت البن وانا بندهه جوا الاب مش هتظهر الا لما اكتب ng-content جوا كمبوننت الابن نفسه في المكان اللي عايزها تظهر فيه
+<app-child><p>mmmmmmmmmm</p></app-child> لو كتبنا اي حاجة جوا تاجة في الكمبوننت الابن وانا بندهه جوا الاب مش هتظهر الا لما اكتب ng-content جوا كمبوننت الابن نفسه في المكان اللي عايزها تظهر فيه
 app-child{
   <ng-content></ng-content>
 }
@@ -386,9 +378,9 @@ app-child{
     { path: ':id', component: RecipeDetailComponent }, //لازم الاي دي الداينامك يبقي اخر راوت عشان ميفتكرش الراوت اللي بعده اي دي زيه
     this.router.navigate(['../', this.id, 'edit'], {relativeTo: this.route}) لو عايزين نرجع بالباث خطوة لورا ونروح اي صفحة
 
+    hidden تخلي خانة الراوت متظهرش في حالات معينة زي اني مش عامل لوج ان
 
-(189) Forms
-      1- Template Driven بنحتاج نعمل فيها امبورت ل formModule
+(189) Forms    1- Template Driven بنحتاج نعمل فيها امبورت ل formModule
           <form #gameForm ="ngForm" (ngSubmit)="handleFormSubmit(gameForm)"> نساويها بريفرانس ngForm تجمع الداتا وتديها للفورم
           @viewChild('gameForm') game!: ngForm; //ممكن نستخدم ال viewChild في اننا نوصل للفورم عن طريق الريفرنس
           - ng-invalid نحط ستايل لما يكون الانبوت مش مكتوب فيه داتا مظبوطة  ng-touched لما ادوس ع الانبوت
@@ -610,7 +602,7 @@ app-child{
 
 
 (435) Angular Universal
-          زي ال next في رياكت تخلي السيرفر يشوف الكود الكود يجي من السيرفر كامل SSR حل مشكلة ان الاب لازم يحمل كود الجافاسكريبت كله عشان يشتغل بتتحنل الصفحة مع تكملة تحميل الجافاسكريبت
+          زي ال next في رياكت تخلي السيرفر يشوف الكود الكود يجي من السيرفر كامل SSR حل مشكلة ان الاب لازم يحمل كود الجافاسكريبت كله عشان يشتغل بتتحمل الصفحة مع تكملة تحميل الجافاسكريبت
           - Ng add @nguniversal/express-engine عشان نشغلها
             تتضاف فايلات جديدة وبتتحدث فايلات زي الراوت
           - بنتعامل مع api في فايل server.ts ده عبارة عن فايل nodejs
@@ -621,6 +613,7 @@ app-child{
             Running a SSR / Universal Project with Angular 17+ مش بحتاج اتستخدم Angular Universal في مشاريع انجولر 17 عشان هو كده كده لما بعمل بروجكت بيتيح ليا افعل SSR
             All you have to do with Angular 17, is run ng serve. It automatically use SSR if you enabled it via ng add @angular/ssr or ng new <project-name> --ssr.
 
+          ng build --configration=production نعمل build للبروجكت عشان نرفعه علي host
 
 (445) Angular Animation
           You probably need to install the new animations package (running the command never hurts): npm install --save @angular/animations
