@@ -267,8 +267,8 @@ RxJs
                     ngOnDestroy(): void {this.activatedSub.unsubscribe();}
                     Observable.complete() مش محتاج اعمل unsubscribe لو عملت complete
                     Subscription طريقة تعريف هو البيست براكتس لل Observable  import {subscribtion} from rxjs;
-    (17) Hot Observable بيعمل emit من غير ما يستني يسابسكرايب
-        Cold Observable مينفذش اي حاجة لا لما يعمل سبسكرايب
+    (17) Hot Observable بيعمل emit من غير ما يستني يسابسكرايب يستقبل الداتا علطول زي ال subject 
+        Cold Observable مينفذش اي حاجة لا لما يعمل سبسكرايب زي http
 
     Rxjs يديني فانكشنز و اوبريتور جاهزة ترجعلي Observable استخدمه علطول
         - from يرجع عناصر الارراي في شكل Observable ورا بعض
@@ -558,6 +558,9 @@ app-child{
           - reducer بحط فيها التغيرات اللي جت من ال action تتحط في store بيرجع stste في الفايل بتاعه
           - effects اوامر بتحصل مع ال action محتاجة تتنفذ زي انا اجيب ريكويست من الباك httpRequest - localstorage - logging to console
                     ng add @ngrx/effects ننزل باكدج ال effects
+
+          - ng add @ngrx/schematics --default-collection تخليني اكريت عناصر الستور ب cli
+              ng g action store/auth
 
 
           - providers: [ لازم نكتب كل store و effects في فايل main.ts
