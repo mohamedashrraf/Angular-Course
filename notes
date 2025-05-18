@@ -69,11 +69,29 @@ Angular component lifecycle
 Binding طريقة تخلي html و ts يكلموا بعض بدل استخدام ال dom
   //binding 4 انواع
   one way from ts to html => 3 types
-    1 - interpolation { { } }
+
+    1 - interpolation binding {{}}
+          <h4>Name : {{ username }}</h4>
+          <h4>Name : {{ userObj.name }}</h4>
+          <h4>Age : {{ userObj.age }}</h4>
+
     2 - property binding[] <img [src]="userObj.profilePic" /> للصور عشان بتكون داينامك سورس الصورة او للزرار ال disabled
           قيمة ديناميك بتتغير في التايبسكربت مش ثابتة []
           امثلة ليها زي الصور - الفاليو بتاعت الانبوت زي التكست بوكس - الزرار ال disabled
-    3 - enent binding((click) = "function()" > - change ...) لما ادوس علي زرار او الماوس او اعمل حدث يعمل بايند من فايل الاتشتيامال للتايبسكربت
+          porperty binding
+          <button class="btn btn-primary" [disabled]="!userObj.isAdmin"> اخلي الزرار ديسابول عند حاجة معينة او بعد كام ثانية او لو هو مش ادمن
+            delete user
+          </button>
+          constructor(){
+          setTimeOut(){this.userObj.isAdmin=false,2000}
+          }
+          {{name}}===[innerText]="name" interpolation===property binding هي هي
+
+    3 - event binding((click) = "function()" > - change ...) لما ادوس علي زرار او الماوس او اعمل حدث يعمل بايند من فايل الاتشتيامال للتايبسكربت
+           <!--event binding (click)-->
+           <button class="btn btn-danger" (click)="alertUser()">add user</button>
+           <!-- <input class="form-control" (change)="updateUserInput($event)" [value]="username" /> -->
+           <!--change ناخد القيمة من التايب ونحدثها [value] ناخد القيمة من التايبس ونعرضها في ال html-->
 
   two way binding  [(ngModel)]
     // نعمل انواع binding دي عشان لو اتغيرت قيم الخصائص علي حسب اللي جاية من الداتابيز
@@ -96,27 +114,7 @@ Binding طريقة تخلي html و ts يكلموا بعض بدل استخدام
     this.username = e.target.value
   }
 
-    interpolation binding {{}}
-      <h4>Name : {{ username }}</h4>
-      <h4>Name : {{ userObj.name }}</h4>
-      <h4>Age : {{ userObj.age }}</h4>
-
-porperty binding
-    <button class="btn btn-primary" [disabled]="!userObj.isAdmin"> اخلي الزرار ديسابول عند حاجة معينة او بعد كام ثانية او لو هو مش ادمن
-      delete user
-    </button>
-    constructor(){
-    setTimeOut(){this.userObj.isAdmin=false,2000}
-    }
-
-    {{name}}===[innerText]="name" interpolation===property binding هي هي
-
-    <!--event binding (click)-->
-    <button class="btn btn-danger" (click)="alertUser()">add user</button>
-
-    <!-- <input class="form-control" (change)="updateUserInput($event)" [value]="username" /> -->
-    <!--change ناخد القيمة من التايب ونحدثها [value] ناخد القيمة من التايبس ونعرضها في ال html-->
-
+   
     <!-- two way binding from ts to html and reverse used in form items only -->
     <input class="form-control my-3" [(ngModel)]="username" />
     <!--دمجت الخطوتين اختصارا للخطوتين اللي فوق-->
@@ -144,9 +142,9 @@ porperty binding
 
 Directives  كلاسات بتديني خصائص اقدر استخدمها
     3 types
-      - component هي التاجة اللي بتعبر عن الكمبوننت في الاتشتيمال <app-directive-examples></app-directive-examples> السليكتور اللي في اول فايل التايبسكربت selector: 'app-directive-examples'  بتخليني استدعي الكمبوننت باسمه في التاجة
-      - structural ([ngIf] - [ngFor] - [ngSwitch]) تغير في ال dom
-      - attribute ([ngClass] - [ngStyle] - [ngModel]) تستخدم في الستايل اكتر تغير في العنصر زي انها تخفيه
+      - Component Directives هي التاجة اللي بتعبر عن الكمبوننت في الاتشتيمال <app-directive-examples></app-directive-examples> السليكتور اللي في اول فايل التايبسكربت selector: 'app-directive-examples'  بتخليني استدعي الكمبوننت باسمه في التاجة
+      - Structural Directives ([ngIf] - [ngFor] - [ngSwitch]) تغير في ال dom
+      - Attribute Directives ([ngClass] - [ngStyle] - [ngModel]) تستخدم في الستايل اكتر تغير في العنصر زي انها تخفيه
       كلاسات بضيفها تخليني اخفي او اظهر حاجة او اغير في الستايل
       ngIf و ngClass ممكن يعملوا نفس الحاجة زي انهم يخفوا عنصر بس بينهم اختلاف ان if تغير في ال dom
 
@@ -381,7 +379,8 @@ app-child{
 
     hidden تخلي خانة الراوت متظهرش في حالات معينة زي اني مش عامل لوج ان
 
-(189) Forms    1- Template Driven بنحتاج نعمل فيها امبورت ل formModule
+(189) Forms   
+      1- Template Driven بنحتاج نعمل فيها امبورت ل formModule
           <form #gameForm ="ngForm" (ngSubmit)="handleFormSubmit(gameForm)"> نساويها بريفرانس ngForm تجمع الداتا وتديها للفورم
           @viewChild('gameForm') game!: ngForm; //ممكن نستخدم ال viewChild في اننا نوصل للفورم عن طريق الريفرنس
           - ng-invalid نحط ستايل لما يكون الانبوت مش مكتوب فيه داتا مظبوطة  ng-touched لما ادوس ع الانبوت
