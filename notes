@@ -24,8 +24,9 @@ PARENT TO CHILD @Input()
 CHILD TO PARENT
     //عشان ابعت من الابن للاب لازم يحصل event
     //1 (click)="sendToParent(postItem.id)" في فايل الابن الاتشتيامال نكتبها جوا الزرار او اللي المكان اللي عايز اشغل بيه الحدث
-    //2 sendToParent(id: number) {    }  في فايل التايبسكريبت في الابن اكتب بودي الفانكشن اللي عايز انفذها
-    //   @Output() sendPostId = new EventEmitter<number>(); نعرف بروبيرتي من نوع EventEmitter ده المسؤل عن انه يبعت الداتا من الابن للاب ولازم عشان يتم ده يحصل event و sendPostId بيتحط جوا () في الاتشتيامال بتاع الاب
+    //2 sendToParent(id: number) {  id.emit(this.id);  }  في فايل التايبسكريبت في الابن اكتب بودي الفانكشن اللي عايز انفذها
+        @Output() sendPostId = new EventEmitter<number>(); بعرفه في فايل التايبسكريبت بتاع الابن
+            نعرف بروبيرتي من نوع EventEmitter ده المسؤل عن انه يبعت الداتا من الابن للاب ولازم عشان يتم ده يحصل event و sendPostId بيتحط جوا () في الاتشتيامال بتاع الاب
 
     //3 (sendPostId)="receivedFromChild($event)" في فايل اتشتيامال الاب بناخد الاوتبوت اللي عرفته في الابن وشايل قيمة اللي باعته للاب جوا () ولما يجي يشغل الفانكشن اللي فيها ايفنت
     //4   receivedFromChild(id : any){ this.clickedPostId = id  } في فايل التايبسكريبت بتاع الاب ننفذ بودي الفانكشن تاخد ال id اللي جه من الابن وتحطه في المكان اللي انا عايزه زي العنوان وياخد انتربوليشن عشان يتعرض
@@ -88,7 +89,6 @@ Binding طريقة تخلي html و ts يكلموا بعض بدل استخدام
           {{name}}===[innerText]="name" interpolation===property binding هي هي
 
     3 - event binding((click) = "function()" > - change ...) لما ادوس علي زرار او الماوس او اعمل حدث يعمل بايند من فايل الاتشتيامال للتايبسكربت
-           <!--event binding (click)-->
            <button class="btn btn-danger" (click)="alertUser()">add user</button>
            <!-- <input class="form-control" (change)="updateUserInput($event)" [value]="username" /> -->
            <!--change ناخد القيمة من التايب ونحدثها [value] ناخد القيمة من التايبس ونعرضها في ال html-->
@@ -113,8 +113,6 @@ Binding طريقة تخلي html و ts يكلموا بعض بدل استخدام
   updateUserInput(e : any){
     this.username = e.target.value
   }
-
-   
     <!-- two way binding from ts to html and reverse used in form items only -->
     <input class="form-control my-3" [(ngModel)]="username" />
     <!--دمجت الخطوتين اختصارا للخطوتين اللي فوق-->
@@ -125,8 +123,8 @@ Binding طريقة تخلي html و ts يكلموا بعض بدل استخدام
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 26) projection
-        نمسك عنصرين او اكتر باي دي او كلاس او اي سليكتور في كمبوننت الاب ونحطهم في
-        ngContent ونضيفلهم خصائص منه في كمبوننت الابن
+        نمسك عنصرين او اكتر باي دي او كلاس او اي سليكتور في كمبوننت الاب
+        ونحطهم في ngContent ونضيفلهم خصائص منه في كمبوننت الابن
         لكن ال css اللي واخدها الاب مش هتسمع في الابن الا لو عملنا encapsulation: viewEncapsulation.none كده ال css يبقي جلوبال
         encapsulation: viewEncapsulation.emulated ده ال default
 
@@ -265,7 +263,7 @@ RxJs
                     ngOnDestroy(): void {this.activatedSub.unsubscribe();}
                     Observable.complete() مش محتاج اعمل unsubscribe لو عملت complete
                     Subscription طريقة تعريف هو البيست براكتس لل Observable  import {subscribtion} from rxjs;
-    (17) Hot Observable بيعمل emit من غير ما يستني يسابسكرايب يستقبل الداتا علطول زي ال subject 
+    (17) Hot Observable بيعمل emit من غير ما يستني يسابسكرايب يستقبل الداتا علطول زي ال subject
         Cold Observable مينفذش اي حاجة لا لما يعمل سبسكرايب زي http
 
     Rxjs يديني فانكشنز و اوبريتور جاهزة ترجعلي Observable استخدمه علطول
@@ -379,7 +377,7 @@ app-child{
 
     hidden تخلي خانة الراوت متظهرش في حالات معينة زي اني مش عامل لوج ان
 
-(189) Forms   
+(189) Forms
       1- Template Driven بنحتاج نعمل فيها امبورت ل formModule
           <form #gameForm ="ngForm" (ngSubmit)="handleFormSubmit(gameForm)"> نساويها بريفرانس ngForm تجمع الداتا وتديها للفورم
           @viewChild('gameForm') game!: ngForm; //ممكن نستخدم ال viewChild في اننا نوصل للفورم عن طريق الريفرنس
